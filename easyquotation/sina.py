@@ -1,20 +1,34 @@
 import re
 import json
+import time
 import asyncio
 import requests
 from . import helper
+
 
 class Sina:
     """新浪免费行情获取"""
 
     def __init__(self):
-        self.grep_stock_detail = re.compile(r'(\d+)="([^,]+?)%s' % (r',([\.\d]+)' * 29, ))
-        self.sina_stock_api = 'http://hq.sinajs.cn/list='
+        self.grep_stock_detail = re.compile(r'(\d+)=([^,]+?)%s' % (r',([\.\d]+)' * 29, ))
+        self.sina_stock_api = 'http://hq.sinajs.cn/?format=text&list='
         self.stock_data = []
         self.stock_codes = []
         self.stock_with_exchange_list = []
-        self.max_num = 800
+        self.max_num = 850
         self.load_stock_codes()
+
+        self.stock_with_exchange_list = list(
+                map(lambda stock_code: ('sh%s' if stock_code.startswith(('5', '6', '9')) else 'sz%s') % stock_code,
+                    self.stock_codes))
+
+        self.stock_list = []
+        self.request_num = len(self.stock_with_exchange_list) // self.max_num
+        for range_start in range(self.request_num):
+            num_start = self.max_num * range_start
+            num_end = self.max_num * (range_start + 1)
+            request_list = ','.join(self.stock_with_exchange_list[num_start:num_end])
+            self.stock_list.append(request_list)
 
     def load_stock_codes(self):
         with open(helper.stock_code_path()) as f:
@@ -23,35 +37,27 @@ class Sina:
     @property
     def all(self):
         return self.get_stock_data()
-
-    async def get_stocks_by_range(self, start):
-        num_start = self.max_num * start
-        num_end = self.max_num * (start + 1)
-        stock_list = ','.join(self.stock_with_exchange_list[num_start:num_end])
-
+    
+    async def get_stocks_by_range(self, index):
         loop = asyncio.get_event_loop()
-        response = await loop.run_in_executor(None, requests.get, self.sina_stock_api + stock_list)
-
+        response = await loop.run_in_executor(None, requests.get, self.sina_stock_api + self.stock_list[index])
         self.stock_data.append(response.text)
 
     def get_stock_data(self):
-        if not self.stock_with_exchange_list:
-            self.stock_with_exchange_list = list(
-                map(lambda stock_code: ('sh%s' if stock_code.startswith(('5', '6', '9')) else 'sz%s') % stock_code,
-                    self.stock_codes))
-
         threads = []
-        for x in range(len(self.stock_with_exchange_list) // self.max_num):
-            threads.append(self.get_stocks_by_range(x))
+        for index in range(self.request_num):
+            threads.append(self.get_stocks_by_range(index))
         loop = asyncio.get_event_loop()
         loop.run_until_complete(asyncio.wait(threads))
 
         return self.format_response_data()
 
     def format_response_data(self):
-        result = self.grep_stock_detail.findall(''.join(self.stock_data))
+        stocks_detail = ''.join(self.stock_data)
+        result = self.grep_stock_detail.finditer(stocks_detail)
         stock_dict = dict()
-        for stock in result:
+        for stock_match_object in result:
+            stock = stock_match_object.groups()
             stock_dict[stock[0]] = dict(
                 name=stock[1],
                 open=float(stock[2]),
@@ -86,5 +92,3 @@ class Sina:
             )
         return stock_dict
 
-if __name__ == '__main__':
-    import pprint; pprint.pprint(Sina().all['162411'])
