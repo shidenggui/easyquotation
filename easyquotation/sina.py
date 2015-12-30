@@ -15,7 +15,7 @@ class Sina:
         self.stock_data = []
         self.stock_codes = []
         self.stock_with_exchange_list = []
-        self.max_num = 850
+        self.max_num = 800
         self.load_stock_codes()
 
         self.stock_with_exchange_list = list(
@@ -23,7 +23,7 @@ class Sina:
                     self.stock_codes))
 
         self.stock_list = []
-        self.request_num = len(self.stock_with_exchange_list) // self.max_num
+        self.request_num = len(self.stock_with_exchange_list) // self.max_num + 1
         for range_start in range(self.request_num):
             num_start = self.max_num * range_start
             num_end = self.max_num * (range_start + 1)
@@ -47,7 +47,11 @@ class Sina:
         threads = []
         for index in range(self.request_num):
             threads.append(self.get_stocks_by_range(index))
-        loop = asyncio.get_event_loop()
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         loop.run_until_complete(asyncio.wait(threads))
 
         return self.format_response_data()
