@@ -23,7 +23,7 @@ import easyquotation
 #### 选择 sina 行情
 
 ```python
-quotation = esayquotation.use('sina')
+quotation = easyquotation.use('sina')
 ```
 
 #### 获取所有股票行情
