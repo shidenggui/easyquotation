@@ -10,7 +10,7 @@ class Sina:
     """新浪免费行情获取"""
 
     def __init__(self):
-        self.grep_stock_detail = re.compile(r'(\d+)=([^,]+?)%s' % (r',([\.\d]+)' * 29, ))
+        self.grep_stock_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s' % (r',([\.\d]+)' * 29, ))
         self.sina_stock_api = 'http://hq.sinajs.cn/?format=text&list='
         self.stock_data = []
         self.stock_codes = []
@@ -37,7 +37,7 @@ class Sina:
     @property
     def all(self):
         return self.get_stock_data()
-    
+
     async def get_stocks_by_range(self, index):
         loop = asyncio.get_event_loop()
         response = await loop.run_in_executor(None, requests.get, self.sina_stock_api + self.stock_list[index])
