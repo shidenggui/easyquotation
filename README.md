@@ -68,3 +68,9 @@ quotation.all
   ......
 }
 ```
+
+#### 更新股票代码
+
+```
+easyquotation.update_stock_codes()
+```

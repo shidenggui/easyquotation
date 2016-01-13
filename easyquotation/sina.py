@@ -3,7 +3,7 @@ import json
 import time
 import asyncio
 import requests
-from . import helper
+from . import helpers
 
 
 class Sina:
@@ -31,7 +31,7 @@ class Sina:
             self.stock_list.append(request_list)
 
     def load_stock_codes(self):
-        with open(helper.stock_code_path()) as f:
+        with open(helpers.stock_code_path()) as f:
             self.stock_codes = json.load(f)['stock']
 
     @property
