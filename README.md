@@ -114,6 +114,50 @@ quotation = easyquotation.use('jsl') # ['jsl']
 quotation.funda() # 参数可选择利率、折价率、交易量、有无下折、是否永续来过滤
 ```
 
+*****return**
+
+```
+{ 150020:
+{'abrate': '5:5',
+'calc_info': None,
+'coupon_descr': '+3.0%',
+'coupon_descr_s': '+3.0%',
+'fund_descr': '每年第一个工作日定折，无下折，A不参与上折，净值<1元无定折',
+'funda_amount': 178823,
+'funda_amount_increase': '0',
+'funda_amount_increase_rt': '0.00%',
+'funda_base_est_dis_rt': '2.27%',
+'funda_base_est_dis_rt_t1': '2.27%',
+'funda_base_est_dis_rt_t2': '-0.34%',
+'funda_base_est_dis_rt_tip': '',
+'funda_base_fund_id': '163109',
+'funda_coupon': '5.75',
+'funda_coupon_next': '4.75',
+'funda_current_price': '0.783',
+'funda_discount_rt': '24.75%',
+'funda_id': '150022',
+'funda_increase_rt': '0.00%',
+'funda_index_id': '399001',
+'funda_index_increase_rt': '0.00%',
+'funda_index_name': '深证成指',
+'funda_left_year': '永续',
+'funda_lower_recalc_rt': '1.82%',
+'funda_name': '深成指A',
+'funda_nav_dt': '2015-09-14',
+'funda_profit_rt': '7.74%',
+'funda_profit_rt_next': '6.424%',
+'funda_value': '1.0405',
+'funda_volume': '0.00',
+'fundb_upper_recalc_rt': '244.35%',
+'fundb_upper_recalc_rt_info': '深成指A不参与上折',
+'last_time': '09:18:22',
+'left_recalc_year': '0.30411',
+'lower_recalc_profit_rt': '-',
+'next_recalc_dt': '<span style="font-style:italic">2016-01-04</span>',
+'owned': 0,
+'status_cd': 'N'}>'}}
+```
+
 
 #### 更新股票代码
 
