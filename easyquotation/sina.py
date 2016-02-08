@@ -43,6 +43,7 @@ class Sina:
             self.stock_data.append(response_text)
 
     def get_stock_data(self):
+        del self.stock_data[:]
         threads = []
         for index in range(self.request_num):
             threads.append(self.get_stocks_by_range(index))
