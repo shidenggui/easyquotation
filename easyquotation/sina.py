@@ -9,7 +9,7 @@ class Sina:
     """新浪免费行情获取"""
 
     def __init__(self):
-        self.grep_stock_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s' % (r',([\.\d]+)' * 29, ))
+        self.grep_stock_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s%s' % (r',([\.\d]+)' * 29, r',([-\.\d:]+)' * 2))
         self.sina_stock_api = 'http://hq.sinajs.cn/?format=text&list='
         self.stock_data = []
         self.stock_codes = []
@@ -93,6 +93,7 @@ class Sina:
                 ask4=float(stock[28]),
                 ask5_volume=int(stock[29]),
                 ask5=float(stock[30]),
+                date=stock[31],
+                time=stock[32],
             )
         return stock_dict
-
