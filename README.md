@@ -14,6 +14,18 @@
  
 > pip install -r requirements.txt
 
+### 安装
+
+```python
+pip install easyquotation
+```
+
+#### 升级
+
+```python
+pip install easyquotation --upgrade
+```
+
 ### 用法
 
 #### 引入:
