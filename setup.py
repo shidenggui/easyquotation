@@ -1,26 +1,30 @@
-# easyquotation
+from setuptools import setup
 
-### 前言
-* 获取新浪的免费实时行情
-* 获取 `leverfun` 的免费 `Level 2` 十档行情
-* 获取集思路的分级基金数据
-* 有兴趣的可以加群 `429011814` 一起讨论
-
-**开发环境** : `Ubuntu 15.10` / `Python 3.5`
-
-### requirements
-
-> Python 3.5+
- 
-> pip install -r requirements.txt
-
-### 用法
-
-#### 引入:
-
-```python
 import easyquotation
-```
+
+long_desc = """
+easyquotation
+===============
+
+* easy to use to get stock info in China Stock
+
+Installation
+--------------
+
+pip install easyquotation
+
+Upgrade
+---------------
+
+    pip install easyquotation --upgrade
+
+Quick Start
+--------------
+
+::
+
+    import easyquotation
+
 
 #### 选择 sina 行情
 
@@ -54,7 +58,7 @@ quotation.all
   'bid1': '8.87', # 买一价
   'bid1_volume': '21800', # 买一量
   ...
-  'bid2': '8.86', 
+  'bid2': '8.86',
   'bid2_volume': '78400',
   'date': '2016-02-19',
   'time': '14:30:00',
@@ -97,7 +101,7 @@ quotation.stocks(['000001', '162411'])
   'bid1': '8.87', # 买一价
   'bid1_volume': '21800', # 买一量
   ...
-  'bid2': '8.86', 
+  'bid2': '8.86',
   'bid2_volume': '78400',
   ...},
   ......
@@ -168,3 +172,22 @@ quotation.fundb() # 参数如上
 ```
 easyquotation.update_stock_codes()
 ```
+"""
+
+setup(
+        name='easyquotation',
+        version=easyquotation.__version__,
+        description='A utility for Fetch China Stock Info',
+        long_description=long_desc,
+        author='shidenggui',
+        author_email='longlyshidenggui@gmail.com',
+        license='BSD',
+        url='https://github.com/shidenggui/easyquotation',
+        keywords='China stock trade',
+        install_requires=['requests', 'aiohttp', 'six'],
+        classifiers=['Development Status :: 4 - Beta',
+                     'Programming Language :: Python :: 3.5',
+                     'License :: OSI Approved :: BSD License'],
+        packages=['easyquotation'],
+        package_data={'': ['*.conf']}
+)
