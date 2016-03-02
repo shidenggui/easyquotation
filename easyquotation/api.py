@@ -1,7 +1,8 @@
 import sys
-from .sina import Sina
-from .leverfun import Leverfun
+
 from .jsl import Jsl
+from .leverfun import Leverfun
+from .sina import Sina
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):

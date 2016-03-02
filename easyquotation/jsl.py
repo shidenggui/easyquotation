@@ -69,7 +69,7 @@ class Jsl(object):
             cell = row['cell']
             d[funda_id] = cell
         return d
-    
+
     @staticmethod
     def formatfundbjson(fundbjson):
         """格式化集思录返回的json数据,以字典形式保存"""

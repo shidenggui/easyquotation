@@ -1,6 +1,7 @@
-import re
-import os
 import json
+import os
+import re
+
 import requests
 
 STOCK_CODE_PATH = 'stock_codes.conf'

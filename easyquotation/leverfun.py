@@ -1,4 +1,5 @@
 import asyncio
+
 import aiohttp
 
 
@@ -52,4 +53,3 @@ if __name__ == '__main__':
     q = Leverfun()
     print(q.stocks(['000001', '162411']))
     print(q.stocks('162411'))
-
