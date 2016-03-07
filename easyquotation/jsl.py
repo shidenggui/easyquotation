@@ -19,6 +19,9 @@ class Jsl(object):
 
     #分级套利的接口
     _fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
+    
+    #集思录登录接口
+    __jxl_login_url = 'http://www.jisilu.cn/account/ajax/login_process/'
 
     # 分级A数据
     # 返回的字典格式
@@ -141,19 +144,44 @@ class Jsl(object):
         self.__fundb = data
         return self.__fundb
 
-    #获取分级套利
-    def fundarb(self, avolume=100 ,bvolume=100 ,ptype='price'):
+
+    #获取分级套利,jslusername=集思录登录用户名，jslpassword=集思录登录密码
+    def fundarb(self, jslusername ,jslpassword ,avolume=100 ,bvolume=100 ,ptype='price'):
+        print('requests.__version__: ' ,requests.__version__)
+        
         """以字典形式返回分级A数据
         :param avolume: A成交额，单位百万
         :param bvolume: B成交额，单位百万
         :param 溢价计算方式，ptype:price=现价，buy=买一，sell=卖一
         """
-        # 添加当前的ctime
-        self.__funda_url = self.__funda_url.format(ctime=int(time.time()))
+
+        s = requests.session()
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko'
+        }
+        s.headers.update(headers)
         
-        pdata = {'avolume': avolume ,'bvolume': bvolume ,'ptype': ptype ,'is_search': 1 ,'market': ['sh' ,'sz'] ,'rp': 100}
+        logindata = dict(return_url='http://www.jisilu.cn/' ,
+                         user_name=jslusername ,
+                         password=jslpassword ,
+                         net_auto_login='1' ,
+                         _post_type='ajax')
+        rep = s.post(self.__jxl_login_url ,data=logindata)
+
+        if rep.status_code != 200 : return {}
+
+        # 添加当前的ctime
+        self.__fundarb_url = self.__fundarb_url.format(ctime=int(time.time()))
+        
+        pdata = dict(avolume=avolume ,
+                            bvolume=bvolume ,
+                            ptype=ptype ,
+                            is_search='1' ,
+                            market=['sh' ,'sz'] ,
+                            rp='100')
         # 请求数据
-        rep = requests.post(self.__funda_url ,data=pdata)
+        rep = s.post(self.__fundarb_url ,data=pdata)
+        
         # 获取返回的json字符串
         fundajson = json.loads(rep.text)
         # 格式化返回的json字符串
