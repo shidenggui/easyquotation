@@ -3,6 +3,7 @@ import sys
 from .jsl import Jsl
 from .leverfun import Leverfun
 from .sina import Sina
+from .tencent import Tencent
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):
@@ -16,3 +17,5 @@ def use(source):
         return Leverfun()
     if source in ['jsl']:
         return Jsl()
+    if source in ['qq', 'tencent']:
+        return Tencent()

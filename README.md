@@ -2,6 +2,7 @@
 
 ### 前言
 * 获取新浪的免费实时行情
+* 获取腾讯财经的免费实时行情
 * 获取 `leverfun` 的免费 `Level 2` 十档行情
 * 获取集思路的分级基金数据
 * 有兴趣的可以加群 `429011814` 一起讨论
@@ -73,6 +74,18 @@ quotation.all
   ...},
   ......
 }
+```
+
+#### 选择 tencent 行情
+
+```python
+quotation = easyquotation.use('tencent') # or qq
+```
+
+#### 获取所有股票行情
+
+```python
+quotation.all
 ```
 
 #### 选择 leverfun 免费十档行情
