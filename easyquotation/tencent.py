@@ -1,6 +1,5 @@
 import asyncio
 import json
-import re
 from datetime import datetime
 
 import aiohttp
