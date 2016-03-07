@@ -17,6 +17,9 @@ class Jsl(object):
     # 分级B的接口
     __fundb_url = 'http://www.jisilu.cn/data/sfnew/fundb_list/?___t={ctime:d}'
 
+    #分级套利的接口
+    _fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
+
     # 分级A数据
     # 返回的字典格式
     # { 150022:
@@ -137,3 +140,24 @@ class Jsl(object):
             data = {k: data[k] for k in data if float(data[k]['fundb_discount_rt'][:-1]) > min_discount}
         self.__fundb = data
         return self.__fundb
+
+    #获取分级套利
+    def fundarb(self, avolume=100 ,bvolume=100 ,ptype='price'):
+        """以字典形式返回分级A数据
+        :param avolume: A成交额，单位百万
+        :param bvolume: B成交额，单位百万
+        :param 溢价计算方式，ptype:price=现价，buy=买一，sell=卖一
+        """
+        # 添加当前的ctime
+        self.__funda_url = self.__funda_url.format(ctime=int(time.time()))
+        
+        pdata = {'avolume': avolume ,'bvolume': bvolume ,'ptype': ptype ,'is_search': 1 ,'market': ['sh' ,'sz'] ,'rp': 100}
+        # 请求数据
+        rep = requests.post(self.__funda_url ,data=pdata)
+        # 获取返回的json字符串
+        fundajson = json.loads(rep.text)
+        # 格式化返回的json字符串
+        data = self.formatjson(fundajson)
+        
+        self.__fundarb = data
+        return self.__fundarb
