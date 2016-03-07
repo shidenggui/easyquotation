@@ -157,7 +157,7 @@ class Jsl(object):
         # 获取返回的json字符串
         fundajson = json.loads(rep.text)
         # 格式化返回的json字符串
-        data = self.formatjson(fundajson)
+        data = self.formatfundajson(fundajson)
         
         self.__fundarb = data
         return self.__fundarb
