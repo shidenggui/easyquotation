@@ -112,8 +112,8 @@ class Tencent:
                 'close': float(stock[4]),
                 'open': float(stock[5]),
                 'volume': float(stock[6]) * 100,
-                'buy_volume': int(stock[7]) * 100,
-                'sell_volume': float(stock[8]) * 100,
+                'bid_volume': int(stock[7]) * 100,
+                'ask_volume': float(stock[8]) * 100,
                 'bid1': float(stock[9]),
                 'bid1_volume': int(stock[10]) * 100,
                 'bid2': float(stock[11]),
@@ -151,7 +151,7 @@ class Tencent:
                 '振幅': float(stock[43]),  # 换成英文
                 '流通市值': float(stock[44]) if stock[44] != '' else None,  # 换成英文
                 '总市值': float(stock[45]) if stock[44] != '' else None,  # 换成英文
-                '市净率': float(stock[46]),  # 换成英文
+                'PB': float(stock[46]),
                 '涨停价': float(stock[47]),  # 换成英文
                 '跌停价': float(stock[48])  # 换成英文
             }
