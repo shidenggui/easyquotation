@@ -187,6 +187,24 @@ quotation.fundb() # 参数如上
 'status_cd': 'N'}>'}}
 ```
 
+##### 分级基金套利接口
+
+```
+quotation.fundarb(jsl_username, jsl_password, avolume=100, bvolume=100, ptype='price'):
+
+```
+参数意义
+jsl_username: 集思录用户名
+jsl_password: 集思路登录密码
+avolume: A成交额，单位百万
+bvolume: B成交额，单位百万
+ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
+```
+
+** return ** 
+
+对应的分级 A 数据
+        """以字典形式返回分级A数据
 
 #### 更新股票代码
 
