@@ -143,7 +143,7 @@ quotation.funda() # 参数可选择利率、折价率、交易量、有无下折
 quotation.fundb() # 参数如上
 ```
 
-*****return**
+**return**
 
 ```
 { 150020:
@@ -190,7 +190,8 @@ quotation.fundb() # 参数如上
 ##### 分级基金套利接口
 
 ```
-quotation.fundarb(jsl_username, jsl_password, avolume=100, bvolume=100, ptype='price'):
+quotation.fundarb(jsl_username, jsl_password, avolume=100, bvolume=100, ptype='price')
+```
 
 ```
 参数意义
@@ -201,7 +202,7 @@ bvolume: B成交额，单位百万
 ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
 ```
 
-** return ** 
+**return** 
 
 对应的分级 A 数据
         """以字典形式返回分级A数据
