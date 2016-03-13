@@ -240,7 +240,7 @@ class Jsl(object):
         if min_volume:
             # 过滤小于指定交易量的数据
             data = {fund_id: cell for fund_id, cell in data.items() if float(cell["volume"]) >= min_volume}
-        if min_discount:
+        if min_discount is not None:
             # 指定最小溢价率
             if isinstance(min_discount, str):
                 if min_discount.endswith("%"):
@@ -249,7 +249,7 @@ class Jsl(object):
                 else:
                     min_discount = float(min_discount) / 100.
             data = {fund_id: cell for fund_id, cell in data.items() if self.percentage2float(cell["discount_rt"]) >= min_discount}
-        if max_discount:
+        if max_discount is not None:
             # 指定最大溢价率
             if isinstance(max_discount, str):
                 if max_discount.endswith("%"):
