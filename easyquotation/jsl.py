@@ -194,15 +194,10 @@ class Jsl(object):
         return self.__fundarb
 
 
-    def etfindex(self, fields=[], min_volume=0, min_discount=0, forever=False):
-        """以字典形式返回 指数ETF 数据
-        :param fields:利率范围，形如['+3.0%', '6.0%']
-        :param min_volume:最小交易量，单位万元
-        :param min_discount:最小折价率, 单位%
-        :param forever: 是否选择永续品种,默认 False
-
-        # >>> Jsl().etfindex()
-
+    def etfindex(self):
+        """
+        以字典形式返回 指数ETF 数据
+        :return:
         """
         # 添加当前的ctime
         self.__etf_index_url = self.__etf_index_url.format(ctime=int(time.time()))
