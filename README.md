@@ -219,7 +219,7 @@ ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
 *[集思录ETF源网页](https://www.jisilu.cn/data/etf/#tlink_2)*
 
 ```
-quotation.etfindex()
+quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=None)
 ```
 
 **return**
