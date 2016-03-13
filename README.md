@@ -88,6 +88,12 @@ quotation = easyquotation.use('tencent') # or qq
 quotation.all
 ```
 
+#### 更新股票代码
+
+```
+easyquotation.update_stock_codes()
+```
+
 #### 选择 leverfun 免费十档行情
 
 ```
@@ -205,8 +211,42 @@ ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
 
 对应的分级 A 数据
 
-#### 更新股票代码
+
+##### 指数ETF查询接口
+
+**TIP :** 尚未包含黄金ETF和货币ETF
+
+*[集思录ETF源网页](https://www.jisilu.cn/data/etf/#tlink_2)*
 
 ```
-easyquotation.update_stock_codes()
+quotation.etfindex()
 ```
+
+**return**
+
+```
+{
+    "510050": {
+        "fund_id": "510050",                # 代码
+        "fund_nm": "50ETF",                 # 名称
+        "price": "2.066",                   # 现价
+        "increase_rt": "0.34%",             # 涨幅
+        "volume": "71290.96",               # 成交额(万元)
+        "index_nm": "上证50",                # 指数
+        "pe": "9.038",                      # 指数PE
+        "pb": "1.151",                      # 指数PB
+        "index_increase_rt": "0.45%",       # 指数涨幅
+        "estimate_value": "2.0733",         # 估值
+        "fund_nav": "2.0730",               # 净值
+        "nav_dt": "2016-03-11",             # 净值日期
+        "discount_rt": "-0.34%",            # 溢价率
+        "creation_unit": "90",              # 最小申赎单位(万份)
+        "amount": "1315800",                # 份额
+        "unit_total": "271.84",             # 规模(亿元)
+        "index_id": "000016",               # 指数代码
+        "last_time": "15:00:00",            # 价格最后时间(未确定)
+        "last_est_time": "23:50:02",        # 估值最后时间(未确定)
+    }
+}
+```
+
