@@ -23,6 +23,12 @@ class Jsl(object):
     # 集思录登录接口
     __jxl_login_url = 'http://www.jisilu.cn/account/ajax/login_process/'
 
+    # 集思录 ETF 接口
+    __etf_index_url = "https://www.jisilu.cn/jisiludata/etf.php?___t={ctime:d}"
+    # 黄金 ETF , 货币 ETF 留坑,未完成
+    __etf_gold_url = "https://www.jisilu.cn/jisiludata/etf.php?qtype=pmetf&___t={ctime:d}"
+    __etf_money_url = "https://www.jisilu.cn/data/money_fund/list/?___t={ctime:d}"
+
     # 分级A数据
     # 返回的字典格式
     # { 150022:
@@ -85,6 +91,26 @@ class Jsl(object):
             fundb_id = cell['fundb_id']
             d[fundb_id] = cell
         return d
+
+    @staticmethod
+    def formatetfindexjson(fundbjson):
+        """格式化集思录返回 指数ETF 的json数据,以字典形式保存"""
+        d = {}
+        for row in fundbjson['rows']:
+            cell = row['cell']
+            fundb_id = cell['fund_id']
+            d[fundb_id] = cell
+        return d
+
+
+    @staticmethod
+    def percentage2float(per):
+        """
+        将字符串的百分数转化为浮点数
+        :param per:
+        :return:
+        """
+        return float(per.strip('%')) / 100.
 
     def funda(self, fields=[], min_volume=0, min_discount=0, ignore_nodown=False, forever=False):
         """以字典形式返回分级A数据
@@ -186,3 +212,61 @@ class Jsl(object):
 
         self.__fundarb = data
         return self.__fundarb
+
+
+    def etfindex(self, index_id="", min_volume=0, max_discount=None, min_discount=None):
+        """
+        以字典形式返回 指数ETF 数据
+        :param index_id: 获取指定的指数
+        :param min_volume: 最小成交量
+        :param min_discount: 最低溢价率, 适用于溢价套利, 格式 "-1.2%", "-1.2", -0.012 三种均可
+        :param max_discount: 最高溢价率, 适用于折价套利, 格式 "-1.2%", "-1.2", -0.012 三种均可
+        :return: {"fund_id":{}}
+        """
+        # 添加当前的ctime
+        self.__etf_index_url = self.__etf_index_url.format(ctime=int(time.time()))
+        # 请求数据
+        rep = requests.get(self.__etf_index_url)
+        # 获取返回的json字符串, 转化为字典
+        etfJson = rep.json()
+
+        # 格式化返回的json字符串
+        data = self.formatetfindexjson(etfJson)
+
+        # 过滤
+        if index_id:
+            # 指定跟踪的指数代码
+            data = {fund_id: cell for fund_id, cell in data.items() if cell["index_id"] == index_id}
+        if min_volume:
+            # 过滤小于指定交易量的数据
+            data = {fund_id: cell for fund_id, cell in data.items() if float(cell["volume"]) >= min_volume}
+        if min_discount is not None:
+            # 指定最小溢价率
+            if isinstance(min_discount, str):
+                if min_discount.endswith("%"):
+                    # 如果是字符串形式,先转为浮点形式
+                    min_discount = self.percentage2float(min_discount)
+                else:
+                    min_discount = float(min_discount) / 100.
+            data = {fund_id: cell for fund_id, cell in data.items() if self.percentage2float(cell["discount_rt"]) >= min_discount}
+        if max_discount is not None:
+            # 指定最大溢价率
+            if isinstance(max_discount, str):
+                if max_discount.endswith("%"):
+                    # 如果是字符串形式,先转为浮点形式
+                    max_discount = self.percentage2float(max_discount)
+                else:
+                    max_discount = float(max_discount) / 100.
+            data = {fund_id: cell for fund_id, cell in data.items() if self.percentage2float(cell["discount_rt"]) <= max_discount}
+
+        self.__etfindex = data
+        return self.__etfindex
+
+
+if __name__ == "__main__":
+    Jsl().etfindex(
+        index_id="000016",
+        min_volume=0,
+        max_discount="-0.4",
+        min_discount="-1.3%"
+    )
