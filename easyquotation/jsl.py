@@ -23,6 +23,12 @@ class Jsl(object):
     # 集思录登录接口
     __jxl_login_url = 'http://www.jisilu.cn/account/ajax/login_process/'
 
+    # 集思录 ETF 接口
+    __etf_index_url = "https://www.jisilu.cn/jisiludata/etf.php?___t={ctime:d}"
+    # 黄金 ETF , 货币 ETF 留坑,未完成
+    __etf_gold_url = "https://www.jisilu.cn/jisiludata/etf.php?qtype=pmetf&___t={ctime:d}"
+    __etf_money_url = "https://www.jisilu.cn/data/money_fund/list/?___t={ctime:d}"
+
     # 分级A数据
     # 返回的字典格式
     # { 150022:
@@ -186,3 +192,46 @@ class Jsl(object):
 
         self.__fundarb = data
         return self.__fundarb
+
+
+    def etfindex(self, fields=[], min_volume=0, min_discount=0, forever=False):
+        """以字典形式返回 指数ETF 数据
+        :param fields:利率范围，形如['+3.0%', '6.0%']
+        :param min_volume:最小交易量，单位万元
+        :param min_discount:最小折价率, 单位%
+        :param forever: 是否选择永续品种,默认 False
+
+        # >>> Jsl().etfindex()
+
+        """
+        # 添加当前的ctime
+        self.__etf_index_url = self.__etf_index_url.format(ctime=int(time.time()))
+        # 请求数据
+        rep = requests.get(self.__etf_index_url)
+        # 获取返回的json字符串
+        # etfjson = json.loads(rep.text)
+        dic = rep.text
+        print(121212,dic)
+        # print(etfjson)
+
+
+        # 格式化返回的json字符串
+        # data = self.formatfundbjson(etfjson)
+
+        # 过滤小于指定交易量的数据
+        # if min_volume:
+        #     data = {k: data[k] for k in data if float(data[k]['fundb_volume']) > min_volume}
+        # if len(fields):
+        #     data = {k: data[k] for k in data if data[k]['coupon_descr_s'] in ''.join(fields)}
+        # if forever:
+        #     data = {k: data[k] for k in data if data[k]['fundb_left_year'].find('永续') != -1}
+        # if min_discount:
+        #     data = {k: data[k] for k in data if float(data[k]['fundb_discount_rt'][:-1]) > min_discount}
+        # self.__etfindex = data
+        # return self.__etfindex
+
+
+
+
+if __name__ == "__main__":
+    Jsl().etfindex()
