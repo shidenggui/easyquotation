@@ -18,7 +18,7 @@ class Jsl(object):
     __fundb_url = 'http://www.jisilu.cn/data/sfnew/fundb_list/?___t={ctime:d}'
 
     # 分级套利的接口
-    _fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
+    __fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
 
     # 集思录登录接口
     __jxl_login_url = 'http://www.jisilu.cn/account/ajax/login_process/'
@@ -194,7 +194,7 @@ class Jsl(object):
         if rep.status_code != 200: return {}
 
         # 添加当前的ctime
-        self.__fundarb_url = self.__fundarb_url.format(ctime=int(time.time()))
+        fundarb_url = self.__fundarb_url.format(ctime=int(time.time()))
 
         pdata = dict(avolume=avolume,
                      bvolume=bvolume,
@@ -203,7 +203,7 @@ class Jsl(object):
                      market=['sh', 'sz'],
                      rp='100')
         # 请求数据
-        rep = s.post(self.__fundarb_url, data=pdata)
+        rep = s.post(fundarb_url, data=pdata)
 
         # 获取返回的json字符串
         fundajson = json.loads(rep.text)
