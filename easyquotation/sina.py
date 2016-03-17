@@ -54,7 +54,7 @@ class Sina:
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        loop.run_until_complete(asyncio.wait(threads))
+        loop.run_until_complete(asyncio.gather(*threads))
 
         return self.format_response_data()
 
