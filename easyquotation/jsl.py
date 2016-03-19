@@ -18,10 +18,10 @@ class Jsl(object):
     __fundb_url = 'http://www.jisilu.cn/data/sfnew/fundb_list/?___t={ctime:d}'
 
     # 分级套利的接口
-    _fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
+    __fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
 
     # 集思录登录接口
-    __jxl_login_url = 'http://www.jisilu.cn/account/ajax/login_process/'
+    __jsl_login_url = 'https://www.jisilu.cn/account/ajax/login_process/'
 
     # 集思录 ETF 接口
     __etf_index_url = "https://www.jisilu.cn/jisiludata/etf.php?___t={ctime:d}"
@@ -102,7 +102,6 @@ class Jsl(object):
             d[fundb_id] = cell
         return d
 
-
     @staticmethod
     def percentage2float(per):
         """
@@ -180,7 +179,7 @@ class Jsl(object):
         """
         s = requests.session()
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
         }
         s.headers.update(headers)
 
@@ -189,21 +188,23 @@ class Jsl(object):
                          password=jsl_password,
                          net_auto_login='1',
                          _post_type='ajax')
-        rep = s.post(self.__jxl_login_url, data=logindata)
 
-        if rep.status_code != 200: return {}
+        rep = s.post(self.__jsl_login_url, data=logindata)
+
+        if rep.json()['err'] is not None:
+            return rep.json()
 
         # 添加当前的ctime
-        self.__fundarb_url = self.__fundarb_url.format(ctime=int(time.time()))
+        fundarb_url = self.__fundarb_url.format(ctime=int(time.time()))
 
         pdata = dict(avolume=avolume,
                      bvolume=bvolume,
                      ptype=ptype,
                      is_search='1',
                      market=['sh', 'sz'],
-                     rp='100')
+                     rp='50')
         # 请求数据
-        rep = s.post(self.__fundarb_url, data=pdata)
+        rep = s.post(fundarb_url, data=pdata)
 
         # 获取返回的json字符串
         fundajson = json.loads(rep.text)
@@ -212,7 +213,6 @@ class Jsl(object):
 
         self.__fundarb = data
         return self.__fundarb
-
 
     def etfindex(self, index_id="", min_volume=0, max_discount=None, min_discount=None):
         """
@@ -248,7 +248,8 @@ class Jsl(object):
                     min_discount = self.percentage2float(min_discount)
                 else:
                     min_discount = float(min_discount) / 100.
-            data = {fund_id: cell for fund_id, cell in data.items() if self.percentage2float(cell["discount_rt"]) >= min_discount}
+            data = {fund_id: cell for fund_id, cell in data.items() if
+                    self.percentage2float(cell["discount_rt"]) >= min_discount}
         if max_discount is not None:
             # 指定最大溢价率
             if isinstance(max_discount, str):
@@ -257,7 +258,8 @@ class Jsl(object):
                     max_discount = self.percentage2float(max_discount)
                 else:
                     max_discount = float(max_discount) / 100.
-            data = {fund_id: cell for fund_id, cell in data.items() if self.percentage2float(cell["discount_rt"]) <= max_discount}
+            data = {fund_id: cell for fund_id, cell in data.items() if
+                    self.percentage2float(cell["discount_rt"]) <= max_discount}
 
         self.__etfindex = data
         return self.__etfindex
@@ -265,8 +267,8 @@ class Jsl(object):
 
 if __name__ == "__main__":
     Jsl().etfindex(
-        index_id="000016",
-        min_volume=0,
-        max_discount="-0.4",
-        min_discount="-1.3%"
+            index_id="000016",
+            min_volume=0,
+            max_discount="-0.4",
+            min_discount="-1.3%"
     )
