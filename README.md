@@ -86,6 +86,7 @@ quotation.stocks('162411')
 
 ```
 quotation.stocks(['000001', '162411'])
+```
 
 #### 更新股票代码
 
