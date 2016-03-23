@@ -1,104 +1,15 @@
-import asyncio
-import json
 from datetime import datetime
 
-import aiohttp
-
-from . import helpers
-
-'''
-    '0:      代码
-    '1:      名字
-    '2:      代码
-    '3:      当前价格
-    '4:      昨收
-    '5:      今开
-    '6:      成交量 (手)
-    '7:      外盘
-    '8:      内盘
-    '9:      买一
-    '10:     买一量 (手)
-    '11-18:  买二 买五
-    '19:     卖一
-    '20:     卖一量
-    '21-28:  卖二 卖五
-    '29:     最近逐笔成交
-    '30:     时间
-    '31:     涨跌
-    '32:     涨跌%
-    '33:     最高
-    '34:     最低
-    '35:     价格/成交量（手）/成交额
-    '36:     成交量 (手)
-    '37:     成交额 (万)
-    '38:     换手率
-    '39:     市盈率
-    '40:
-    '41:     最高
-    '42:     最低stock_item
-    '43:     振幅
-    '44:     流通市值
-    '45:     总市值
-    '46:     市净率
-    '47:     涨停价
-    '48:     跌停价
-'''
+from .basequotation import BaseQuotation
 
 
-class Tencent:
+class Tencent(BaseQuotation):
     """腾讯免费行情获取"""
+    stock_api = 'http://qt.gtimg.cn/q='
+    max_num = 60
 
-    def __init__(self):
-        self.tencent_stock_api = 'http://qt.gtimg.cn/q='
-        self.stock_data = []
-        self.stock_codes = []
-        self.stock_with_exchange_list = []
-        self.max_num = 60
-        self.load_stock_codes()
-
-        self.stock_with_exchange_list = list(
-                map(lambda stock_code: ('sh%s' if stock_code.startswith(('5', '6', '9')) else 'sz%s') % stock_code,
-                    self.stock_codes))
-
-        self.stock_list = []
-        self.request_num = len(self.stock_with_exchange_list) // self.max_num + 1
-        for range_start in range(self.request_num):
-            num_start = self.max_num * range_start
-            num_end = self.max_num * (range_start + 1)
-            request_list = ','.join(self.stock_with_exchange_list[num_start:num_end])
-            self.stock_list.append(request_list)
-
-    def load_stock_codes(self):
-        with open(helpers.stock_code_path()) as f:
-            self.stock_codes = json.load(f)['stock']
-
-    @property
-    def all(self):
-        return self.get_stock_data()
-
-    async def get_stocks_by_range(self, index):
-        print('start', index)
-        async with aiohttp.get(self.tencent_stock_api + self.stock_list[index]) as r:
-            response_text = await r.text()
-            print('end', index)
-            self.stock_data.append(response_text)
-
-    def get_stock_data(self):
-        del self.stock_data[:]
-        threads = []
-        for index in range(self.request_num):
-            threads.append(self.get_stocks_by_range(index))
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        loop.run_until_complete(asyncio.wait(threads))
-
-        return self.format_response_data()
-
-    def format_response_data(self):
-        stocks_detail = ''.join(self.stock_data)
+    def format_response_data(self, rep_data):
+        stocks_detail = ''.join(rep_data)
         stock_details = stocks_detail.split(';')
         stock_dict = dict()
         for stock_detail in stock_details:

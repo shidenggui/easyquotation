@@ -1,66 +1,17 @@
-import asyncio
-import json
 import re
 
-import aiohttp
-
-from . import helpers
+from .basequotation import BaseQuotation
 
 
-class Sina:
+class Sina(BaseQuotation):
     """新浪免费行情获取"""
+    max_num = 800
+    grep_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s%s' % (r',([\.\d]+)' * 29, r',([-\.\d:]+)' * 2))
+    stock_api = 'http://hq.sinajs.cn/?format=text&list='
 
-    def __init__(self):
-        self.grep_stock_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s%s' % (r',([\.\d]+)' * 29, r',([-\.\d:]+)' * 2))
-        self.sina_stock_api = 'http://hq.sinajs.cn/?format=text&list='
-        self.stock_data = []
-        self.stock_codes = []
-        self.stock_with_exchange_list = []
-        self.max_num = 800
-        self.load_stock_codes()
-
-        self.stock_with_exchange_list = list(
-                map(lambda stock_code: ('sh%s' if stock_code.startswith(('5', '6', '9')) else 'sz%s') % stock_code,
-                    self.stock_codes))
-
-        self.stock_list = []
-        self.request_num = len(self.stock_with_exchange_list) // self.max_num + 1
-        for range_start in range(self.request_num):
-            num_start = self.max_num * range_start
-            num_end = self.max_num * (range_start + 1)
-            request_list = ','.join(self.stock_with_exchange_list[num_start:num_end])
-            self.stock_list.append(request_list)
-
-    def load_stock_codes(self):
-        with open(helpers.stock_code_path()) as f:
-            self.stock_codes = json.load(f)['stock']
-
-    @property
-    def all(self):
-        return self.get_stock_data()
-
-    async def get_stocks_by_range(self, index):
-        async with aiohttp.get(self.sina_stock_api + self.stock_list[index]) as r:
-            response_text = await r.text()
-            self.stock_data.append(response_text)
-
-    def get_stock_data(self):
-        del self.stock_data[:]
-        threads = []
-        for index in range(self.request_num):
-            threads.append(self.get_stocks_by_range(index))
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        loop.run_until_complete(asyncio.gather(*threads))
-
-        return self.format_response_data()
-
-    def format_response_data(self):
-        stocks_detail = ''.join(self.stock_data)
-        result = self.grep_stock_detail.finditer(stocks_detail)
+    def format_response_data(self, rep_data):
+        stocks_detail = ''.join(rep_data)
+        result = self.grep_detail.finditer(stocks_detail)
         stock_dict = dict()
         for stock_match_object in result:
             stock = stock_match_object.groups()

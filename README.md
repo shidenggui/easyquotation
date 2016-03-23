@@ -35,10 +35,10 @@ pip install easyquotation --upgrade
 import easyquotation
 ```
 
-#### 选择 sina 行情
+#### 选择行情
 
 ```python
-quotation = easyquotation.use('sina')
+quotation = easyquotation.use('sina') # 新浪 ['sina'] 腾讯 ['tencent', 'qq']
 ```
 
 #### 获取所有股票行情
@@ -75,18 +75,17 @@ quotation.all
   ......
 }
 ```
+ 
+##### 单只股票
 
-#### 选择 tencent 行情
-
-```python
-quotation = easyquotation.use('tencent') # or qq
+```
+quotation.stocks('162411')
 ```
 
-#### 获取所有股票行情
+##### 多只股票
 
-```python
-quotation.all
 ```
+quotation.stocks(['000001', '162411'])
 
 #### 更新股票代码
 
