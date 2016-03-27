@@ -17,6 +17,9 @@ class Jsl(object):
     # 分级B的接口
     __fundb_url = 'http://www.jisilu.cn/data/sfnew/fundb_list/?___t={ctime:d}'
 
+    # 母基接口
+    __fundm_url = 'https://www.jisilu.cn/data/sfnew/fundm_list/?___t={ctime:d}'
+
     # 分级套利的接口
     __fundarb_url = 'http://www.jisilu.cn/data/sfnew/arbitrage_vip_list/?___t={ctime:d}'
 
@@ -141,6 +144,20 @@ class Jsl(object):
 
         self.__funda = data
         return self.__funda
+
+    def fundm(self):
+        """以字典形式返回分级母基数据
+        """
+        # 添加当前的ctime
+        self.__fundm_url = self.__fundm_url.format(ctime=int(time.time()))
+        # 请求数据
+        rep = requests.get(self.__fundm_url)
+        # 获取返回的json字符串
+        fundmjson = json.loads(rep.text)
+        # 格式化返回的json字符串
+        data = self.formatfundajson(fundmjson)
+        self.__fundm = data
+        return self.__fundm
 
     def fundb(self, fields=[], min_volume=0, min_discount=0, forever=False):
         """以字典形式返回分级B数据
