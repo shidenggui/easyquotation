@@ -149,6 +149,8 @@ quotation.funda() # 参数可选择利率、折价率、交易量、有无下折
 quotation.fundb() # 参数如上
 ```
 
+对应的分级 A 数据
+
 **return**
 
 ```
@@ -208,9 +210,96 @@ ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
 ```
 
 **return** 
-
-对应的分级 A 数据
-
+```
+{
+    "165511":{
+        'base_fund_id': '165511',                         # 母基金代码
+        'AB_price': '现价A/B : 1.008/1.329',
+        'a_profit_rt_next': '4.705',
+        'a_ratio': 4,
+        'abrate': '4:6',
+        'apply_fee': '0',
+        'apply_fee_tip': '0',
+        'apply_sell': '-0.59',
+        'asset_ratio': '95%',
+        'asset_ratio_last': '99%',
+        'asset_ratio_num': '95.00',
+        'b_est_val': '1.340',
+        'b_gangan': '1.502',
+        'b_ratio': 6,
+        'base_est_dis_rt': '-0.56%',
+        'base_est_val': '1.2073',
+        'base_fund_nm': '信诚500',
+        'base_lower_recalc_rt': '54.15%',
+        'base_nav': '1.1970',
+        'base_nav_dt': '2016-04-13',
+        'buy1A': '1.007',
+        'buy1B': '1.329',
+        'buy1_amountA': '0.201',
+        'buy1_amountB': '7.123',
+        'buy_redeem': '-0.51',
+        'calc_info': None,
+        'coupon': '0.00%',
+        'coupon_next': '4.700',
+        'est_dis_rt': '-0.55%',
+        'est_time': '2016-04-14 15:10:05',
+        'fundA_amount': '6667',
+        'fundA_amount_increase': '-51',
+        'fundA_amount_increase_rt': '-0.76%',
+        'fundA_amount_tip': '2016-04-14 A类总份额6667.000万份，份额增长-0.76%',
+        'fundA_id': '150028',
+        'fundA_last_dt': '2016-04-14',
+        'fundA_last_time': '14:57:02',
+        'fundA_nav': '1.0090',
+        'fundA_nav_dt': '2016-04-13',
+        'fundA_nm': '中证500A',
+        'fundA_stock_volume': '28.2446',
+        'fundA_stock_volume_tip': 'A类总份额6667.000万份, 成交28万份',
+        'fundA_turnover_rt': '0.42%',
+        'fundA_volume': '28.46',
+        'fundB_amount': 10000.5,
+        'fundB_amount_increase': '-76',
+        'fundB_amount_tip': '2016-04-14 B类总份额10000万份，份额增长-0.76%',
+        'fundB_id': '150029',
+        'fundB_last_dt': '2016-04-14',
+        'fundB_last_time': '15:00:27',
+        'fundB_nav': '1.3220',
+        'fundB_nav_dt': '2016-04-13',
+        'fundB_nm': '中证500B',
+        'fundB_stock_volume': '255.5280',
+        'fundB_stock_volume_tip': 'B类总份额10000万份, 成交256万份',
+        'fundB_turnover_rt': '2.56%',
+        'fundB_volume': '337.24',
+        'fund_company_nm': '信诚基金',
+        'funda_name_tip': '下期利率：4.70，修正收益率：4.71%',
+        'idx_incr_rt': '0.91%',
+        'increase_rtA': '-0.10%',
+        'increase_rtB': '1.06%',
+        'index_id': '399905',
+        'index_nm': '中证 500',
+        'is_est_val': 1,
+        'is_last_nav': 1,
+        'lower_recalc_rt': '54.15',
+        'maturity_dt': '-',
+        'merge_price': '1.2006',
+        'min_apply_amount': None,
+        'notes': 'http://www.xcfunds.com/funds_2012/165511/fundinfor.shtml\r\n',
+        'ownedA': 0,
+        'ownedM': 1,
+        'priceA': '1.008',
+        'priceB': '1.329',
+        'real_idx_increase_rt': '0.91',
+        'recalc_to': None,
+        'redeem_fee': '0.5%',
+        'redeem_fee_tip': '0.5%',
+        'sell1A': '1.008',
+        'sell1B': '1.330',
+        'sell1_amountA': '7.132',
+        'sell1_amountB': '16.820',
+        'status_cd': 'N'
+    }
+}
+```
 
 ##### 指数ETF查询接口
 
