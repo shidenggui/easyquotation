@@ -2,6 +2,7 @@ import asyncio
 import json
 
 import aiohttp
+import easyutils
 
 from . import helpers
 
@@ -16,9 +17,7 @@ class BaseQuotation:
         self.stock_list = self.gen_stock_list(stock_codes)
 
     def gen_stock_list(self, stock_codes):
-        stock_with_exchange_list = list(
-                map(lambda stock_code: ('sh%s' if stock_code.startswith(('5', '6', '9')) else 'sz%s') % stock_code,
-                    stock_codes))
+        stock_with_exchange_list = [easyutils.stock.get_stock_type(code) + code[-6:] for code in stock_codes]
 
         stock_list = []
         request_num = len(stock_codes) // self.max_num + 1

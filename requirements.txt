@@ -1,3 +1,4 @@
 six
 requests
 aiohttp
+easyutils
