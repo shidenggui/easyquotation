@@ -1,5 +1,5 @@
 # coding:utf8
-# 获取集思路的分级数据
+# 获取集思路的数据
 import json
 import time
 
@@ -31,6 +31,11 @@ class Jsl(object):
     # 黄金 ETF , 货币 ETF 留坑,未完成
     __etf_gold_url = "https://www.jisilu.cn/jisiludata/etf.php?qtype=pmetf&___t={ctime:d}"
     __etf_money_url = "https://www.jisilu.cn/data/money_fund/list/?___t={ctime:d}"
+
+    # 集思录QDII接口
+    __qdii_url = "https://www.jisilu.cn/data/qdii/qdii_list/?___t={ctime:d}"
+    # 可转债
+    __cb_url = "https://www.jisilu.cn/data/cbnew/cb_list/?___t={ctime:d}"
 
     # 分级A数据
     # 返回的字典格式
@@ -103,6 +108,15 @@ class Jsl(object):
             cell = row['cell']
             fundb_id = cell['fund_id']
             d[fundb_id] = cell
+        return d
+
+    @staticmethod
+    def formatjisilujson(json):
+        d = {}
+        for row in json['rows']:
+            cell = row['cell']
+            id = row['id']
+            d[id] = cell
         return d
 
     @staticmethod
@@ -281,6 +295,46 @@ class Jsl(object):
         self.__etfindex = data
         return self.__etfindex
 
+    def qdii(self, min_volume=0):
+        """以字典形式返回QDII数据
+        :param min_volume:最小交易量，单位万元
+        """
+        # 添加当前的ctime
+        self.__qdii_url = self.__qdii_url.format(ctime=int(time.time()))
+        # 请求数据
+        rep = requests.get(self.__qdii_url)
+        # 获取返回的json字符串
+        fundjson = json.loads(rep.text)
+        # 格式化返回的json字符串
+        data = self.formatjisilujson(fundjson)
+        data = {
+            x: y for x, y in data.items() if y['notes'] != "估值有问题"
+        }
+        # 过滤小于指定交易量的数据
+        if min_volume:
+            data = {k: data[k] for k in data if float(data[k]['volume']) > min_volume}
+
+        self.__qdii = data
+        return self.__qdii
+
+    def cb(self, min_volume=0):
+        """以字典形式返回QDII数据
+        :param min_volume:最小交易量，单位万元
+        """
+        # 添加当前的ctime
+        self.__cb_url = self.__cb_url.format(ctime=int(time.time()))
+        # 请求数据
+        rep = requests.get(self.__cb_url)
+        # 获取返回的json字符串
+        fundjson = json.loads(rep.text)
+        # 格式化返回的json字符串
+        data = self.formatjisilujson(fundjson)
+        # 过滤小于指定交易量的数据
+        if min_volume:
+            data = {k: data[k] for k in data if float(data[k]['volume']) > min_volume}
+
+        self.__cb = data
+        return self.__cb
 
 if __name__ == "__main__":
     Jsl().etfindex(
