@@ -1,5 +1,6 @@
 import sys
 
+from .boc import Boc
 from .jsl import Jsl
 from .leverfun import Leverfun
 from .sina import Sina
@@ -19,3 +20,5 @@ def use(source):
         return Jsl()
     if source in ['qq', 'tencent']:
         return Tencent()
+    if source in ['boc']:
+        return Boc()
