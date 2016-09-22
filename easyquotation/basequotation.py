@@ -44,7 +44,10 @@ class BaseQuotation:
         return self.get_stock_data(stock_list)
 
     async def get_stocks_by_range(self, params):
-        async with aiohttp.get(self.stock_api + params) as r:
+        headers = {
+            'Accept-Encoding': 'gzip'
+        }
+        async with aiohttp.ClientSession().get(self.stock_api + params, timeout=5, headers=headers) as r:
             response_text = await r.text()
             return response_text
 
