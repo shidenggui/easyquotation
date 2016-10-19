@@ -49,9 +49,12 @@ class BaseQuotation:
         headers = {
             'Accept-Encoding': 'gzip'
         }
-        async with self._session.get(self.stock_api + params, timeout=5, headers=headers) as r:
-            response_text = await r.text()
-            return response_text
+        try:
+            async with self._session.get(self.stock_api + params, timeout=5, headers=headers) as r:
+                response_text = await r.text()
+                return response_text
+        except asyncio.TimeoutError:
+            return None
 
     def get_stock_data(self, stock_list):
         self._session = aiohttp.ClientSession()
@@ -68,7 +71,7 @@ class BaseQuotation:
         res = loop.run_until_complete(asyncio.gather(*coroutines))
 
         self._session.close()
-        return self.format_response_data(res)
+        return self.format_response_data([x for x in res if x is not None])
 
     def format_response_data(self, rep_data):
         pass
