@@ -1,4 +1,5 @@
 six
 requests
-aiohttp<=1.0.5
+yarl
+aiohttp>=1.1.1
 easyutils

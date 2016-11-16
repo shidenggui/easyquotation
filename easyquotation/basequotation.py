@@ -3,6 +3,7 @@ import json
 
 import aiohttp
 import easyutils
+import yarl
 
 from . import helpers
 
@@ -47,10 +48,12 @@ class BaseQuotation:
 
     async def get_stocks_by_range(self, params):
         headers = {
-            'Accept-Encoding': 'gzip'
+            'Accept-Encoding': 'gzip, deflate, sdch',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'
         }
+        url = yarl.URL(self.stock_api + params, encoded=True)
         try:
-            async with self._session.get(self.stock_api + params, timeout=5, headers=headers) as r:
+            async with self._session.get(url, timeout=10, headers=headers) as r:
                 response_text = await r.text()
                 return response_text
         except asyncio.TimeoutError:
