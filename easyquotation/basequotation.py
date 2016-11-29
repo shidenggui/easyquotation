@@ -37,14 +37,14 @@ class BaseQuotation:
 
     @property
     def all(self):
-        return self.get_stock_data(self.stock_list)
+        return self.format_response_data(self.get_stock_data([],self.stock_list))
 
     def stocks(self, stock_codes):
         if type(stock_codes) is not list:
             stock_codes = [stock_codes]
 
         stock_list = self.gen_stock_list(stock_codes)
-        return self.get_stock_data(stock_list)
+        return self.get_stock_data([],stock_list)
 
     async def get_stocks_by_range(self, params):
         headers = {
@@ -55,11 +55,12 @@ class BaseQuotation:
         try:
             async with self._session.get(url, timeout=10, headers=headers) as r:
                 response_text = await r.text()
-                return response_text
+                return params,response_text
         except asyncio.TimeoutError:
-            return None
+            print("timeout")
+            return params,None
 
-    def get_stock_data(self, stock_list):
+    def get_stock_data(self,res_data ,stock_list):
         self._session = aiohttp.ClientSession()
         coroutines = []
 
@@ -74,7 +75,19 @@ class BaseQuotation:
         res = loop.run_until_complete(asyncio.gather(*coroutines))
 
         self._session.close()
-        return self.format_response_data([x for x in res if x is not None])
+
+        fails = []
+        for params,response_text in res:
+            if response_text is None:
+                fails.append(params)
+            else:
+                res_data.append(response_text)
+
+        print(len(fails))
+        if len(fails) > 0:
+            return self.get_stock_data(res_data,fails)
+        else:
+            return res_data
 
     def format_response_data(self, rep_data):
         pass
