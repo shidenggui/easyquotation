@@ -1,13 +1,15 @@
 # easyquotation
 
+快速获取新浪/腾讯的全市场行情, 网络正常的情况下只需要 `200+ms`
+
 ### 前言
 * 获取新浪的免费实时行情
 * 获取腾讯财经的免费实时行情
 * 获取 `leverfun` 的免费 `Level 2` 十档行情
 * 获取集思路的分级基金数据
-* 有兴趣的可以加群 `429011814` 一起讨论
+* 有兴趣的可以加群 `556050652` 一起讨论
 
-**开发环境** : `Ubuntu 15.10` / `Python 3.5`
+**开发环境** : `Ubuntu 16.04` / `Python 3.5`
 
 ### requirements
 
@@ -44,13 +46,13 @@ quotation = easyquotation.use('sina') # 新浪 ['sina'] 腾讯 ['tencent', 'qq']
 #### 获取所有股票行情
 
 ```python
-quotation.all
+quotation.all_market
 ```
 
 **return**
 
 ```python
- {'000159': {'name': '国际实业', # 股票名
+ {'sh000159': {'name': '国际实业', # 股票名
   'buy': 8.87, # 竞买价
   'sell': 8.88, # 竞卖价
   'now': 8.88, # 现价
@@ -79,7 +81,7 @@ quotation.all
 ##### 单只股票
 
 ```
-quotation.stocks('162411')
+quotation.stocks('162411') # 支持直接指定前缀，如 'sh000001'
 ```
 
 ##### 多只股票
@@ -117,7 +119,7 @@ quotation.stocks(['000001', '162411'])
 **return**
 
 ```python
- {'000159': {'buy': '8.87', # 竞买价
+ {'sh000159': {'buy': '8.87', # 竞买价
   'sell': '8.88', # 竞卖价
   'now': '8.88', # 现价
   'close': '8.96', # 昨日收盘价
