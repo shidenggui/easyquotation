@@ -32,15 +32,15 @@ class Leverfun:
             self.stocks_dict[stock_code] = Leverfun.format_response_data(r_json)
 
     @classmethod
-    def format_response_data(cls, response_data):
+    def format_response_data(cls, response_data, **kwargs):
         data = response_data['data']
         buys = data['buyPankou']
         sells = data['sellPankou']
         stock_dict = dict(
-                close=round(data['preClose'], 3),
-                now=data['match'],
-                buy=buys[0]['price'],
-                sell=sells[0]['price'],
+            close=round(data['preClose'], 3),
+            now=data['match'],
+            buy=buys[0]['price'],
+            sell=sells[0]['price'],
         )
         for trade_info_li, name in zip([sells, buys], ['ask', 'bid']):
             for i, trade_info in enumerate(trade_info_li):

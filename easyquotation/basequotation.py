@@ -1,5 +1,6 @@
 import asyncio
 import json
+import warnings
 
 import aiohttp
 import easyutils
@@ -37,7 +38,13 @@ class BaseQuotation:
 
     @property
     def all(self):
+        warnings.warn('use all_market instead', DeprecationWarning)
         return self.get_stock_data(self.stock_list)
+
+    @property
+    def all_market(self):
+        """return quotation with stock_code prefix key"""
+        return self.get_stock_data(self.stock_list, prefix=True)
 
     def stocks(self, stock_codes):
         if type(stock_codes) is not list:
@@ -59,7 +66,7 @@ class BaseQuotation:
         except asyncio.TimeoutError:
             return None
 
-    def get_stock_data(self, stock_list):
+    def get_stock_data(self, stock_list, **kwargs):
         self._session = aiohttp.ClientSession()
         coroutines = []
 
@@ -74,7 +81,7 @@ class BaseQuotation:
         res = loop.run_until_complete(asyncio.gather(*coroutines))
 
         self._session.close()
-        return self.format_response_data([x for x in res if x is not None])
+        return self.format_response_data([x for x in res if x is not None], **kwargs)
 
-    def format_response_data(self, rep_data):
+    def format_response_data(self, rep_data, **kwargs):
         pass
