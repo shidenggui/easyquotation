@@ -1,3 +1,4 @@
+# coding:utf8
 import sys
 
 from .boc import Boc
