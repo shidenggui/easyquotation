@@ -23,6 +23,10 @@ class BaseQuotation:
     def gen_stock_list(self, stock_codes):
         stock_with_exchange_list = [easyutils.stock.get_stock_type(code) + code[-6:] for code in stock_codes]
 
+        if len(stock_with_exchange_list) < self.max_num:
+            request_list = ','.join(stock_with_exchange_list)
+            return [request_list]
+
         stock_list = []
         request_num = len(stock_codes) // self.max_num + 1
         for range_start in range(request_num):
