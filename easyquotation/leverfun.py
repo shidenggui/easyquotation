@@ -26,6 +26,22 @@ class Leverfun:
         loop.run_until_complete(asyncio.wait(threads))
         return self.stocks_dict
 
+    def real(self, stock_codes, **kwargs):
+        if type(stock_codes) is not list:
+            stock_codes = [stock_codes]
+
+        threads = []
+        for stock in stock_codes:
+            threads.append(self.get_stock_detail(stock))
+
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        loop.run_until_complete(asyncio.wait(threads))
+        return self.stocks_dict
+
     async def get_stock_detail(self, stock_code):
         params = dict(stockCode=stock_code)
         async with aiohttp.get(Leverfun.stock_api, params=params) as r:

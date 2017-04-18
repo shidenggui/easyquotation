@@ -43,7 +43,7 @@ class BaseQuotation:
 
     @property
     def all(self):
-        warnings.warn('use all_market instead', DeprecationWarning)
+        warnings.warn('use market_snapshot instead', DeprecationWarning)
         return self.get_stock_data(self.stock_list)
 
     @property
@@ -64,6 +64,25 @@ class BaseQuotation:
 
         stock_list = self.gen_stock_list(stock_codes)
         return self.get_stock_data(stock_list, prefix=True)
+
+    def real(self, stock_codes, prefix=False):
+        """return specific stocks real quotation
+        :param stock_codes: stock code or list of stock code, when prefix is True, stock code must start with sh/sz
+        :param prefix: if prefix is True, stock_codes must contain sh/sz market flag.If prefix is False, index quotation can't return
+        :return quotation dict, key is stock_code, value is real quotation. If prefix with True, key start with sh/sz market flag
+
+        """
+        if type(stock_codes) is not list:
+            stock_codes = [stock_codes]
+
+        stock_list = self.gen_stock_list(stock_codes)
+        return self.get_stock_data(stock_list, prefix=prefix)
+
+    def market_snapshot(self, prefix=False):
+        """return all market quotation snapshot
+        :param prefix: if prefix is True, return quotation dict's  stock_code key start with sh/sz market flag
+        """
+        return self.get_stock_data(self.stock_list, prefix=prefix)
 
     async def get_stocks_by_range(self, params):
         if self._session is None:

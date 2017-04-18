@@ -40,13 +40,13 @@ import easyquotation
 #### 选择行情
 
 ```python
-quotation = easyquotation.use('sina') # 新浪 ['sina'] 腾讯 ['tencent', 'qq']
+quotation = easyquotation.use('sina') # 新浪 ['sina'] 腾讯 ['tencent', 'qq'] 
 ```
 
 #### 获取所有股票行情
 
 ```python
-quotation.all_market
+quotation.market_snapshot(prefix=True) # prefix 参数指定返回的行情字典中的股票代码 key 是否带 sz/sh 前缀
 ```
 
 **return**
@@ -81,13 +81,19 @@ quotation.all_market
 ##### 单只股票
 
 ```
-quotation.stocks('162411') # 支持直接指定前缀，如 'sh000001'
+quotation.real('162411') # 支持直接指定前缀，如 'sh000001'
 ```
 
 ##### 多只股票
 
 ```
-quotation.stocks(['000001', '162411'])
+quotation.stocks(['000001', '162411']) 
+```
+
+##### 同时获取指数和行情
+
+```
+quotation.stocks(['sh000001', 'sz000001'], prefix=True) 
 ```
 
 #### 更新股票代码
@@ -107,13 +113,13 @@ quotation = easyquotation.use('lf') # ['leverfun', 'lf']
 ##### 单只股票
 
 ```
-quotation.stocks('162411')
+quotation.real('162411')
 ```
 
 ##### 多只股票
 
 ```
-quotation.stocks(['000001', '162411'])
+quotation.real(['000001', '162411'])
 ```
 
 **return**
