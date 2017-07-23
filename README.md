@@ -347,3 +347,35 @@ quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=No
 }
 ```
 
+
+##### 分数图
+
+
+*[腾讯分时图地址](http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js)*
+
+```
+quotation = easyquotation.use("timekline")
+data = quotation.market_snapshot(prefix=True) 
+
+```
+
+**return**
+
+```
+{
+   'sh603828': {
+        'date': '170721',  #日期 
+        'time_data': {
+            '201707210930': ['0930', '19.42', '61'], # [时间, 当前价, 上一分钟到这一分钟之间的成交数量]
+            '201707210931': ['0931', '19.42','122'], 
+            '201707210932': ['0932', '19.43', '123'], 
+            '201707210933': ['0933', '19.48', '125'], 
+            '201707210934': ['0934', '19.49', '133'], 
+            '201707210935': ['0935', '19.48', '161'], 
+            ...
+    }
+}
+```
+
+
+
