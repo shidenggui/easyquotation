@@ -6,6 +6,7 @@ from .jsl import Jsl
 from .leverfun import Leverfun
 from .sina import Sina
 from .tencent import Tencent
+from .timekline import TimeKline
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):
@@ -23,3 +24,5 @@ def use(source):
         return Tencent()
     if source in ['boc']:
         return Boc()
+    if source in ["timekline"]:
+        return TimeKline()
