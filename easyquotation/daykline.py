@@ -25,7 +25,7 @@ url = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&par
 
 class DayKline(BaseQuotation):
     """腾讯免费行情获取"""
-    stock_api = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param=%s,day,,,%s,qfq&r=0.7773272375526847"
+    stock_api = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param=hk%s,day,,,%s,qfq&r=0.7773272375526847"
     max_num = 1
 
     def format_response_data(self, rep_data, prefix=False):
@@ -43,11 +43,21 @@ class DayKline(BaseQuotation):
                 print(e)
                 continue
             # print(daykline)
+
+            status_code = daykline.get("code")
+            if status_code not in ("0",0):
+                # 当返回错误状态码时候，不做处理
+                continue
             daykline= daykline.get("data")
-            # print(daykline)
             for key, value in daykline.items():
-                stock_code = key
-                _stmt = value['qfqday']
+                stock_code = key[2:]
+                
+                _stmt = value.get('qfqday')
+                if _stmt is None:
+                    _stmt = value.get('day')
+            if _stmt is None:
+                continue
+
             stock_dict[stock_code] = _stmt
 
         return stock_dict
@@ -97,4 +107,3 @@ class DayKline(BaseQuotation):
 
 if __name__ == "__main__":
     pass
-    

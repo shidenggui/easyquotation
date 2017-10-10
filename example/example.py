@@ -7,7 +7,7 @@ def test_timekline():
 def test_daykline():
     import easyquotation
     quotation  = easyquotation.use("daykline")
-    data = quotation.get_stock_data(stock_list=['hk00001','hk00700'])
+    data = quotation.get_stock_data(stock_list=['00001','00042'])
     # data = quotation.get_stock_data(stock_list=['hk00700'])
     print(data)
 
