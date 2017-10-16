@@ -31,18 +31,13 @@ class DayKline(BaseQuotation):
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = ''.join(rep_data)
         stock_detail_split = stocks_detail.split('kline_dayqfq=')
-        # print(stock_details)
         stock_dict = dict()
         for daykline in stock_detail_split:
-            # stock_detail_split = stocks_detail.split('kline_dayqfq=')
-            # if len(stock_detail_split) == 2:
-            #     _,daykline = stock_detail_split
             try:
                 daykline = json.loads(daykline)
             except Exception as e:
                 print(e)
                 continue
-            # print(daykline)
 
             status_code = daykline.get("code")
             if status_code not in ("0",0):
@@ -93,15 +88,12 @@ class DayKline(BaseQuotation):
         for params in stock_list:
             coroutine = self.get_stocks_by_range(params,days)
             coroutines.append(coroutine)
-            # time.sleep(0.02)
-            # break
         try:
             loop = asyncio.get_event_loop()
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
         res = loop.run_until_complete(asyncio.gather(*coroutines))
-        print()
         return self.format_response_data([x for x in res if x is not None], **kwargs)
 
 

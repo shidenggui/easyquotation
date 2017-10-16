@@ -383,18 +383,20 @@ data = quotation.market_snapshot(prefix=True)
 ```
 import easyquotation
 quotation  = easyquotation.use("daykline")
-data = quotation.get_stock_data(stock_list=['hk00001','hk00700'])
-# data = quotation.get_stock_data(stock_list=['hk00700'])
+data = quotation.get_stock_data(stock_list=['00001','00700'])
 print(data)
 
 ```
 *return*
 ```
 {
-    'hk00001': [
+    '00001': [
                 ['2017-10-09', '352.00', '349.00', '353.00', '348.60', '13455864.00'], # [日期, 今开, 今收, 最高, 最低, 成交量 ]
                 ['2017-10-10', '350.80', '351.20', '352.60', '349.80', '10088970.00'],
                ]
+    '00700':[
+        
+    ]           
      }
 }
 ```
