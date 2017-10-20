@@ -377,5 +377,27 @@ data = quotation.market_snapshot(prefix=True)
 }
 ```
 
+##### 港股日k线图
+*[腾讯日k线图](http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param=hk00700,day,,,350,qfq&r=0.7773272375526847)*
 
+```
+import easyquotation
+quotation  = easyquotation.use("daykline")
+data = quotation.get_stock_data(stock_list=['00001','00700'])
+print(data)
+
+```
+*return*
+```
+{
+    '00001': [
+                ['2017-10-09', '352.00', '349.00', '353.00', '348.60', '13455864.00'], # [日期, 今开, 今收, 最高, 最低, 成交量 ]
+                ['2017-10-10', '350.80', '351.20', '352.60', '349.80', '10088970.00'],
+               ]
+    '00700':[
+        
+    ]           
+     }
+}
+```
 

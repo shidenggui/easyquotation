@@ -7,6 +7,7 @@ from .leverfun import Leverfun
 from .sina import Sina
 from .tencent import Tencent
 from .timekline import TimeKline
+from .daykline import DayKline
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):
@@ -26,3 +27,5 @@ def use(source):
         return Boc()
     if source in ["timekline"]:
         return TimeKline()
+    if source in ['daykline']:
+        return DayKline()
