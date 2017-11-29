@@ -8,6 +8,7 @@ from .sina import Sina
 from .tencent import Tencent
 from .timekline import TimeKline
 from .daykline import DayKline
+from .hkqoute import HKQuote
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):
@@ -29,3 +30,6 @@ def use(source):
         return TimeKline()
     if source in ['daykline']:
         return DayKline()
+    if source in ['hkquote']:
+        return HKQuote()
+    

@@ -353,7 +353,8 @@ quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=No
 
 *[腾讯分时图地址](http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js)*
 
-```
+```python
+
 quotation = easyquotation.use("timekline")
 data = quotation.market_snapshot(prefix=True) 
 
@@ -380,7 +381,8 @@ data = quotation.market_snapshot(prefix=True)
 ##### 港股日k线图
 *[腾讯日k线图](http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param=hk00700,day,,,350,qfq&r=0.7773272375526847)*
 
-```
+```python
+
 import easyquotation
 quotation  = easyquotation.use("daykline")
 data = quotation.get_stock_data(stock_list=['00001','00700'])
@@ -401,3 +403,43 @@ print(data)
 }
 ```
 
+##### 腾讯港股时时行情 
+*[腾讯控股时时行情](http://sqt.gtimg.cn/utf8/q=r_hk00700)*
+```python
+
+import easyquotation
+quotation = easyquotation.use("hkquote")
+data = quotation.get_stock_data(stock_list=['00001','00700'])
+print(data)
+```
+
+```
+{
+    '00001': 
+        {
+            'stock_code': '00001', # 股票代码
+            'lotSize': '"100', # 每手数量
+            'name': '长和', # 股票名称
+            'price': '97.20', # 股票当前价格
+            'lastPrice': '97.75', # 股票昨天收盘价格
+            'openPrice': '97.75', # 股票今天开盘价格
+            'amount': '1641463.0', # 股票成交量 
+            'time': '2017/11/29 15:38:58', # 当前时间
+            'high': '98.05', # 当天最高价格
+            'low': '97.15' # 当天最低价格
+        }, 
+    '00700': 
+        {
+            'stock_code': '00700', 
+            'lotSize': '"100',
+            'name': '腾讯控股', 
+            'price': '413.20', 
+            'lastPrice': '419.20', 
+            'openPrice': '422.20', 
+            'amount': '21351010.0', 
+            'time': '2017/11/29 15:39:01', 
+            'high': '422.80',
+            'low': '412.40'
+        }
+}
+```

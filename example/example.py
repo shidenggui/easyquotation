@@ -11,6 +11,15 @@ def test_daykline():
     # data = quotation.get_stock_data(stock_list=['hk00700'])
     print(data)
 
+def test_hkquote():
+    import easyquotation
+    quotation = easyquotation.use("hkquote")
+    # data = quotation.get_stock_data(stock_list=['00001'])
+    data = quotation.get_stock_data(stock_list=['00001','00700'])
+    print(data)
+
+
 if __name__ == "__main__":
-    test_daykline()
+    test_hkquote()
+
 
