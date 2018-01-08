@@ -1,12 +1,10 @@
 # coding:utf8
-import re
-import time
+import asyncio
 import json
 
 import aiohttp
-import asyncio
-import easyutils
 import yarl
+
 from .basequotation import BaseQuotation
 
 """
@@ -40,13 +38,13 @@ class DayKline(BaseQuotation):
                 continue
 
             status_code = daykline.get("code")
-            if status_code not in ("0",0):
+            if status_code not in ("0", 0):
                 # 当返回错误状态码时候，不做处理
                 continue
-            daykline= daykline.get("data")
+            daykline = daykline.get("data")
             for key, value in daykline.items():
                 stock_code = key[2:]
-                
+
                 _stmt = value.get('qfqday')
                 if _stmt is None:
                     _stmt = value.get('day')
@@ -71,22 +69,22 @@ class DayKline(BaseQuotation):
         else:
             stock_code = params
             days = 360
-        url = yarl.URL(self.stock_api %(stock_code,days), encoded=True)
+        url = yarl.URL(self.stock_api % (stock_code, days), encoded=True)
         print(url)
         try:
             async with self._session.get(url, timeout=10, headers=headers) as r:
                 asyncio.sleep(0.1)
                 response_text = await r.text()
                 # print(response_text)
-                return  response_text
+                return response_text
         except asyncio.TimeoutError:
             return ''
 
-    def get_stock_data(self, stock_list,days=360, **kwargs):
+    def get_stock_data(self, stock_list, days=360, **kwargs):
         coroutines = []
 
         for params in stock_list:
-            coroutine = self.get_stocks_by_range(params,days)
+            coroutine = self.get_stocks_by_range(params, days)
             coroutines.append(coroutine)
         try:
             loop = asyncio.get_event_loop()
