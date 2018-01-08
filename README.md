@@ -5,7 +5,6 @@
 ### 前言
 * 获取新浪的免费实时行情
 * 获取腾讯财经的免费实时行情
-* 获取 `leverfun` 的免费 `Level 2` 十档行情
 * 获取集思路的分级基金数据
 * 有兴趣的可以加群 `556050652` 一起讨论
 
@@ -102,46 +101,6 @@ quotation.stocks(['sh000001', 'sz000001'], prefix=True)
 easyquotation.update_stock_codes()
 ```
 
-#### 选择 leverfun 免费十档行情
-
-```
-quotation = easyquotation.use('lf') # ['leverfun', 'lf']
-```
-
-#### 获取十档行情
-
-##### 单只股票
-
-```
-quotation.real('162411')
-```
-
-##### 多只股票
-
-```
-quotation.real(['000001', '162411'])
-```
-
-**return**
-
-```python
- {'sh000159': {'buy': '8.87', # 竞买价
-  'sell': '8.88', # 竞卖价
-  'now': '8.88', # 现价
-  'close': '8.96', # 昨日收盘价
-  'ask1': '8.88', # 卖一价
-  'ask1_volume': '111900', # 卖一量
-  'ask2': '8.89',
-  'ask2_volume': '54700',
-  'bid1': '8.87', # 买一价
-  'bid1_volume': '21800', # 买一量
-  ...
-  'bid2': '8.86', 
-  'bid2_volume': '78400',
-  ...},
-  ......
-}
-```
 
 #### 选择 jsl 行情
 

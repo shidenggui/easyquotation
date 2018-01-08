@@ -3,7 +3,6 @@ import sys
 
 from .boc import Boc
 from .jsl import Jsl
-from .leverfun import Leverfun
 from .sina import Sina
 from .tencent import Tencent
 from .timekline import TimeKline
@@ -18,8 +17,6 @@ if PY_VERSION < (3, 5):
 def use(source):
     if source in ['sina']:
         return Sina()
-    if source in ['leverfun', 'lf']:
-        return Leverfun()
     if source in ['jsl']:
         return Jsl()
     if source in ['qq', 'tencent']:
