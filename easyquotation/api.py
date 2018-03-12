@@ -5,9 +5,6 @@ from .boc import Boc
 from .jsl import Jsl
 from .sina import Sina
 from .tencent import Tencent
-from .timekline import TimeKline
-from .daykline import DayKline
-from .hkqoute import HKQuote
 
 PY_VERSION = sys.version_info[:2]
 if PY_VERSION < (3, 5):
@@ -24,9 +21,11 @@ def use(source):
     if source in ['boc']:
         return Boc()
     if source in ["timekline"]:
+        from .timekline import TimeKline
         return TimeKline()
     if source in ['daykline']:
+        from .daykline import DayKline
         return DayKline()
     if source in ['hkquote']:
+        from .hkqoute import HKQuote
         return HKQuote()
-    
