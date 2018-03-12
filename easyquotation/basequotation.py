@@ -84,6 +84,7 @@ class BaseQuotation:
     def get_stock_data(self, stock_list, **kwargs):
         pool = ThreadPool(len(stock_list))
         res = pool.map(self.get_stocks_by_range, stock_list)
+        pool.close()
         return self.format_response_data([x for x in res if x is not None], **kwargs)
 
     def __del__(self):
