@@ -20,9 +20,9 @@ class BaseQuotation:
         self.stock_list = self.gen_stock_list(stock_codes)
 
     def gen_stock_list(self, stock_codes):
-        stock_with_exchange_list = [easyutils.stock.get_stock_type(code) + code[-6:] for code in stock_codes]
+        stock_with_exchange_list = self._gen_stock_prefix(stock_codes)
 
-        if len(stock_with_exchange_list) < self.max_num:
+        if self.max_num > len(stock_with_exchange_list):
             request_list = ','.join(stock_with_exchange_list)
             return [request_list]
 
@@ -34,6 +34,9 @@ class BaseQuotation:
             request_list = ','.join(stock_with_exchange_list[num_start:num_end])
             stock_list.append(request_list)
         return stock_list
+
+    def _gen_stock_prefix(self, stock_codes):
+        return [easyutils.stock.get_stock_type(code) + code[-6:] for code in stock_codes]
 
     @staticmethod
     def load_stock_codes():
@@ -83,13 +86,12 @@ class BaseQuotation:
 
     def get_stock_data(self, stock_list, **kwargs):
         pool = ThreadPool(len(stock_list))
-        res = pool.map(self.get_stocks_by_range, stock_list)
-        pool.close()
+        try:
+            res = pool.map(self.get_stocks_by_range, stock_list)
+        finally:
+            pool.close()
         return self.format_response_data([x for x in res if x is not None], **kwargs)
 
     def __del__(self):
-        if self._session is not None:
-            self._session.close()
-
     def format_response_data(self, rep_data, **kwargs):
         pass
