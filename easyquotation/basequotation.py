@@ -59,8 +59,10 @@ class BaseQuotation:
     def real(self, stock_codes, prefix=False):
         """return specific stocks real quotation
         :param stock_codes: stock code or list of stock code, when prefix is True, stock code must start with sh/sz
-        :param prefix: if prefix is True, stock_codes must contain sh/sz market flag.If prefix is False, index quotation can't return
-        :return quotation dict, key is stock_code, value is real quotation. If prefix with True, key start with sh/sz market flag
+        :param prefix: if prefix is True, stock_codes must contain sh/sz market flag.
+            If prefix is False, index quotation can't return
+        :return quotation dict, key is stock_code, value is real quotation.
+            If prefix with True, key start with sh/sz market flag
 
         """
         if type(stock_codes) is not list:
@@ -92,6 +94,5 @@ class BaseQuotation:
             pool.close()
         return self.format_response_data([x for x in res if x is not None], **kwargs)
 
-    def __del__(self):
     def format_response_data(self, rep_data, **kwargs):
         pass
