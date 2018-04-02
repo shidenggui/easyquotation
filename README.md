@@ -344,7 +344,7 @@ data = quotation.market_snapshot(prefix=True)
 
 import easyquotation
 quotation  = easyquotation.use("daykline")
-data = quotation.get_stock_data(stock_list=['00001','00700'])
+data = quotation.real(['00001','00700'])
 print(data)
 
 ```
