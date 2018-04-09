@@ -1,5 +1,10 @@
 # easyquotation
 
+[![Package](https://img.shields.io/pypi/v/easyquotation.svg)](https://pypi.python.org/pypi/easyquotation)
+[![Travis](https://img.shields.io/travis/shidenggui/easyquotation.svg)](https://travis-ci.org/shidenggui/easyquotation)
+[![License](https://img.shields.io/github/license/shidenggui/easyquotation.svg)](https://github.com/shidenggui/easyquotation/blob/master/LICENSE)
+
+
 快速获取新浪/腾讯的全市场行情, 网络正常的情况下只需要 `200+ms`
 
 ### 前言
