@@ -1,5 +1,5 @@
 six
 requests
 yarl
-aiohttp>=1.1.1
+aiohttp==1.1.1
 easyutils

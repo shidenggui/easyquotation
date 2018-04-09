@@ -27,16 +27,20 @@ class BaseQuotation:
             return [request_list]
 
         stock_list = []
-        request_num = len(stock_codes) // self.max_num + 1
+        request_num = len(stock_codes) // (self.max_num + 1) + 1
         for range_start in range(request_num):
             num_start = self.max_num * range_start
             num_end = self.max_num * (range_start + 1)
-            request_list = ','.join(stock_with_exchange_list[num_start:num_end])
+            request_list = ','.join(
+                stock_with_exchange_list[num_start:num_end])
             stock_list.append(request_list)
         return stock_list
 
     def _gen_stock_prefix(self, stock_codes):
-        return [easyutils.stock.get_stock_type(code) + code[-6:] for code in stock_codes]
+        return [
+            easyutils.stock.get_stock_type(code) + code[-6:]
+            for code in stock_codes
+        ]
 
     @staticmethod
     def load_stock_codes():
@@ -79,8 +83,10 @@ class BaseQuotation:
 
     def get_stocks_by_range(self, params):
         headers = {
-            'Accept-Encoding': 'gzip, deflate, sdch',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'
+            'Accept-Encoding':
+            'gzip, deflate, sdch',
+            'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'
         }
 
         r = self._session.get(self.stock_api + params, headers=headers)
@@ -92,7 +98,8 @@ class BaseQuotation:
             res = pool.map(self.get_stocks_by_range, stock_list)
         finally:
             pool.close()
-        return self.format_response_data([x for x in res if x is not None], **kwargs)
+        return self.format_response_data([x for x in res if x is not None],
+                                         **kwargs)
 
     def format_response_data(self, rep_data, **kwargs):
         pass
