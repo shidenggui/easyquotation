@@ -320,7 +320,7 @@ quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=No
 ```python
 
 quotation = easyquotation.use("timekline")
-data = quotation.market_snapshot(prefix=True) 
+data = quotation.real(['603828'], prefix=True)
 
 ```
 
@@ -349,7 +349,7 @@ data = quotation.market_snapshot(prefix=True)
 
 import easyquotation
 quotation  = easyquotation.use("daykline")
-data = quotation.get_stock_data(stock_list=['00001','00700'])
+data = quotation.real(['00001','00700'])
 print(data)
 
 ```
