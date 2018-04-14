@@ -12,6 +12,16 @@
 * 获取腾讯财经的免费实时行情
 * 获取集思路的分级基金数据
 * 有兴趣的可以加群 `556050652` 一起讨论
+* 捐助:
+
+![微信](http://7xqo8v.com1.z0.glb.clouddn.com/wx.png?imageView2/1/w/300/h/300)             ![支付宝](http://7xqo8v.com1.z0.glb.clouddn.com/zhifubao2.png?imageView2/1/w/300/h/300)
+
+
+## 公众号
+
+扫码关注“易量化”的微信公众号，不定时更新一些个人文章及与大家交流
+
+![](http://7xqo8v.com1.z0.glb.clouddn.com/easy_quant_qrcode.jpg?imageView2/1/w/300/h/300)
 
 **开发环境** : `Ubuntu 16.04` / `Python 3.5`
 
