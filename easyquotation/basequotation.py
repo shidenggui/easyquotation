@@ -93,13 +93,18 @@ class BaseQuotation:
         return r.text
 
     def get_stock_data(self, stock_list, **kwargs):
+        """获取并格式化股票信息"""
+        res = self._fetch_stock_data(stock_list)
+        return self.format_response_data(res, **kwargs)
+
+    def _fetch_stock_data(self, stock_list):
+        """获取股票信息"""
         pool = ThreadPool(len(stock_list))
         try:
             res = pool.map(self.get_stocks_by_range, stock_list)
         finally:
             pool.close()
-        return self.format_response_data([x for x in res if x is not None],
-                                         **kwargs)
+        return [d for d in res if d is not None]
 
     def format_response_data(self, rep_data, **kwargs):
         pass
