@@ -1,5 +1,6 @@
 # coding:utf8
 
+import easyutils
 import re
 
 from .basequotation import BaseQuotation
@@ -10,8 +11,14 @@ url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.281
 
 class TimeKline(BaseQuotation):
     """腾讯免费行情获取"""
-    stock_api = 'http://data.gtimg.cn/flashdata/hushen/minute/{}.js'
+    stock_api = 'http://data.gtimg.cn/flashdata/hushen/minute/'
     max_num = 1
+
+    def _gen_stock_prefix(self, stock_codes):
+        return [
+            easyutils.stock.get_stock_type(code) + code[-6:] + ".js"
+            for code in stock_codes
+        ]
 
     def _fetch_stock_data(self, stock_list):
         """因为 timekline 的返回没有带对应的股票代码，所以要手动带上"""
