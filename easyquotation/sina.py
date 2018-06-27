@@ -6,13 +6,19 @@ from .basequotation import BaseQuotation
 
 class Sina(BaseQuotation):
     """新浪免费行情获取"""
+
     max_num = 800
-    grep_detail = re.compile(r'(\d+)=([^\s][^,]+?)%s%s' % (r',([\.\d]+)' * 29, r',([-\.\d:]+)' * 2))
-    grep_detail_with_prefix = re.compile(r'(\w{2}\d+)=([^\s][^,]+?)%s%s' % (r',([\.\d]+)' * 29, r',([-\.\d:]+)' * 2))
-    stock_api = 'http://hq.sinajs.cn/?format=text&list='
+    grep_detail = re.compile(
+        r"(\d+)=([^\s][^,]+?)%s%s" % (r",([\.\d]+)" * 29, r",([-\.\d:]+)" * 2)
+    )
+    grep_detail_with_prefix = re.compile(
+        r"(\w{2}\d+)=([^\s][^,]+?)%s%s"
+        % (r",([\.\d]+)" * 29, r",([-\.\d:]+)" * 2)
+    )
+    stock_api = "http://hq.sinajs.cn/?format=text&list="
 
     def format_response_data(self, rep_data, prefix=False):
-        stocks_detail = ''.join(rep_data)
+        stocks_detail = "".join(rep_data)
         grep_str = self.grep_detail_with_prefix if prefix else self.grep_detail
         result = grep_str.finditer(stocks_detail)
         stock_dict = dict()

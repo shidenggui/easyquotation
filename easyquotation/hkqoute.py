@@ -14,17 +14,18 @@ url 参数改动
 
 class HKQuote(BaseQuotation):
     """腾讯免费行情获取"""
+
     stock_api = "http://sqt.gtimg.cn/utf8/q="
 
     def _gen_stock_prefix(self, stock_codes):
-        return ['r_hk{}'.format(code) for code in stock_codes]
+        return ["r_hk{}".format(code) for code in stock_codes]
 
     def format_response_data(self, rep_data, prefix=False):
-        stocks_detail = ''.join(rep_data)
+        stocks_detail = "".join(rep_data)
 
         stock_dict = {}
         for raw_quotation in re.findall('v_r_hk\d+=".*?"', stocks_detail):
-            quotation = re.search('"(.*?)"', raw_quotation).group(1).split('~')
+            quotation = re.search('"(.*?)"', raw_quotation).group(1).split("~")
             stock_dict[quotation[2]] = dict(
                 lotSize=float(quotation[0]),
                 name=quotation[1],

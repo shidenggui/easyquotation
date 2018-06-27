@@ -4,6 +4,7 @@ import easyutils
 import re
 
 from .basequotation import BaseQuotation
+
 """
 url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.28163905744440854"
 """
@@ -11,7 +12,8 @@ url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.281
 
 class TimeKline(BaseQuotation):
     """腾讯免费行情获取"""
-    stock_api = 'http://data.gtimg.cn/flashdata/hushen/minute/'
+
+    stock_api = "http://data.gtimg.cn/flashdata/hushen/minute/"
     max_num = 1
 
     def _gen_stock_prefix(self, stock_codes):
@@ -34,9 +36,10 @@ class TimeKline(BaseQuotation):
         stock_dict = dict()
         for stock_code, stock_detail in rep_data:
             # res like ['min_data="', 'date:180413', '0930 11.64 29727', '0931 11.65 52410']
-            res = re.split(r'\\n\\\n', stock_detail)
-            date = '20{}'.format(res[1][-6:])
+            res = re.split(r"\\n\\\n", stock_detail)
+            date = "20{}".format(res[1][-6:])
             time_data = list(
-                d.split() for d in res[2:] if re.match(r'\d{4}', d))
+                d.split() for d in res[2:] if re.match(r"\d{4}", d)
+            )
             stock_dict[stock_code] = {"date": date, "time_data": time_data}
         return stock_dict

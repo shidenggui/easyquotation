@@ -7,20 +7,23 @@ from .tencent import Tencent
 
 
 def use(source):
-    if source in ['sina']:
+    if source in ["sina"]:
         return Sina()
-    if source in ['jsl']:
+    if source in ["jsl"]:
         return Jsl()
-    if source in ['qq', 'tencent']:
+    if source in ["qq", "tencent"]:
         return Tencent()
-    if source in ['boc']:
+    if source in ["boc"]:
         return Boc()
     if source in ["timekline"]:
         from .timekline import TimeKline
+
         return TimeKline()
-    if source in ['daykline']:
+    if source in ["daykline"]:
         from .daykline import DayKline
+
         return DayKline()
-    if source in ['hkquote']:
+    if source in ["hkquote"]:
         from .hkqoute import HKQuote
+
         return HKQuote()

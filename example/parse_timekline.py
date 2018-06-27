@@ -1,4 +1,5 @@
 import easyquotation
+
 quotation = easyquotation.use("timekline")
 resp_data = """
 sz000001~min_data="\n\
@@ -248,4 +249,3 @@ date:170721\n\
 """
 data = quotation.format_response_data(resp_data)
 print(data)
-

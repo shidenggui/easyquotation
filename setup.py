@@ -174,22 +174,27 @@ easyquotation.update_stock_codes()
 """
 
 setup(
-    name='easyquotation',
-    version='0.5.11',
-    description='A utility for Fetch China Stock Info',
+    name="easyquotation",
+    version="0.5.11",
+    description="A utility for Fetch China Stock Info",
     long_description=long_desc,
-    author='shidenggui',
-    author_email='longlyshidenggui@gmail.com',
-    license='BSD',
-    url='https://github.com/shidenggui/easyquotation',
-    keywords='China stock trade',
+    author="shidenggui",
+    author_email="longlyshidenggui@gmail.com",
+    license="BSD",
+    url="https://github.com/shidenggui/easyquotation",
+    keywords="China stock trade",
     install_requires=[
-        'requests', 'aiohttp>=1.1.1', 'yarl', 'six', 'easyutils'
+        "requests",
+        "aiohttp>=1.1.1",
+        "yarl",
+        "six",
+        "easyutils",
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Programming Language :: Python :: 3.5',
-        'License :: OSI Approved :: BSD License'
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3.5",
+        "License :: OSI Approved :: BSD License",
     ],
-    packages=['easyquotation'],
-    package_data={'': ['*.conf']})
+    packages=["easyquotation"],
+    package_data={"": ["*.conf"]},
+)

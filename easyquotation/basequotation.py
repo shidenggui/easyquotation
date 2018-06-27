@@ -11,8 +11,9 @@ from . import helpers
 
 class BaseQuotation:
     """行情获取基类"""
+
     max_num = 800  # 每次请求的最大股票数
-    stock_api = ''  # 股票 api
+    stock_api = ""  # 股票 api
 
     def __init__(self):
         self._session = requests.session()
@@ -23,7 +24,7 @@ class BaseQuotation:
         stock_with_exchange_list = self._gen_stock_prefix(stock_codes)
 
         if self.max_num > len(stock_with_exchange_list):
-            request_list = ','.join(stock_with_exchange_list)
+            request_list = ",".join(stock_with_exchange_list)
             return [request_list]
 
         stock_list = []
@@ -31,8 +32,9 @@ class BaseQuotation:
         for range_start in range(request_num):
             num_start = self.max_num * range_start
             num_end = self.max_num * (range_start + 1)
-            request_list = ','.join(
-                stock_with_exchange_list[num_start:num_end])
+            request_list = ",".join(
+                stock_with_exchange_list[num_start:num_end]
+            )
             stock_list.append(request_list)
         return stock_list
 
@@ -45,11 +47,11 @@ class BaseQuotation:
     @staticmethod
     def load_stock_codes():
         with open(helpers.stock_code_path()) as f:
-            return json.load(f)['stock']
+            return json.load(f)["stock"]
 
     @property
     def all(self):
-        warnings.warn('use market_snapshot instead', DeprecationWarning)
+        warnings.warn("use market_snapshot instead", DeprecationWarning)
         return self.get_stock_data(self.stock_list)
 
     @property
@@ -83,10 +85,8 @@ class BaseQuotation:
 
     def get_stocks_by_range(self, params):
         headers = {
-            'Accept-Encoding':
-            'gzip, deflate, sdch',
-            'User-Agent':
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'
+            "Accept-Encoding": "gzip, deflate, sdch",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36",
         }
 
         r = self._session.get(self.stock_api + params, headers=headers)
