@@ -3,6 +3,11 @@ import re
 
 from .basequotation import BaseQuotation
 
+def _random(n=13):
+    from random import randint
+    start = 10**(n-1)
+    end = (10**n)-1
+    return str(randint(start, end))
 
 class Sina(BaseQuotation):
     """新浪免费行情获取"""
@@ -15,7 +20,7 @@ class Sina(BaseQuotation):
         r"(\w{2}\d+)=([^\s][^,]+?)%s%s"
         % (r",([\.\d]+)" * 29, r",([-\.\d:]+)" * 2)
     )
-    stock_api = "http://hq.sinajs.cn/?format=text&list="
+    stock_api = "http://hq.sinajs.cn/rn="+_random()+"&list="
 
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)
