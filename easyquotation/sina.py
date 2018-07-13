@@ -3,11 +3,13 @@ import re
 
 from .basequotation import BaseQuotation
 
+
 def _random(n=13):
     from random import randint
     start = 10**(n-1)
     end = (10**n)-1
     return str(randint(start, end))
+
 
 class Sina(BaseQuotation):
     """新浪免费行情获取"""
