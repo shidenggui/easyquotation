@@ -1,20 +1,24 @@
 # coding:utf8
 
-import easyutils
 import re
 
-from .basequotation import BaseQuotation
+import easyutils
+
+from . import basequotation
 
 """
 url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.28163905744440854"
 """
 
 
-class TimeKline(BaseQuotation):
+class TimeKline(basequotation.BaseQuotation):
     """腾讯免费行情获取"""
 
-    stock_api = "http://data.gtimg.cn/flashdata/hushen/minute/"
     max_num = 1
+
+    @property
+    def stock_api(self) -> str:
+        return "http://data.gtimg.cn/flashdata/hushen/minute/"
 
     def _gen_stock_prefix(self, stock_codes):
         return [

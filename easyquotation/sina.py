@@ -1,10 +1,11 @@
 # coding:utf8
+import random
 import re
 
-from .basequotation import BaseQuotation
+from . import basequotation
 
 
-class Sina(BaseQuotation):
+class Sina(basequotation.BaseQuotation):
     """新浪免费行情获取"""
 
     max_num = 800
@@ -15,7 +16,16 @@ class Sina(BaseQuotation):
         r"(\w{2}\d+)=([^\s][^,]+?)%s%s"
         % (r",([\.\d]+)" * 29, r",([-\.\d:]+)" * 2)
     )
-    stock_api = "http://hq.sinajs.cn/?format=text&list="
+
+    @property
+    def stock_api(self) -> str:
+        return f"http://hq.sinajs.cn/rn={self._random()}&list="
+
+    @staticmethod
+    def _random(n=13) -> str:
+        start = 10 ** (n - 1)
+        end = (10 ** n) - 1
+        return str(random.randint(start, end))
 
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)

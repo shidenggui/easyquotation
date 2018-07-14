@@ -2,7 +2,7 @@
 import json
 import re
 
-from .basequotation import BaseQuotation
+from . import basequotation
 
 """
 url = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param=hk00001,day,,,660,qfq&r=0.7773272375526847"
@@ -18,11 +18,14 @@ url = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&par
 """
 
 
-class DayKline(BaseQuotation):
+class DayKline(basequotation.BaseQuotation):
     """腾讯免费行情获取"""
 
-    stock_api = "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param="
     max_num = 1
+
+    @property
+    def stock_api(self) -> str:
+        return "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param="
 
     def _gen_stock_prefix(self, stock_codes, day=1500):
         return ["hk{},day,,,{},qfq".format(code, day) for code in stock_codes]
