@@ -1,7 +1,8 @@
 # coding:utf8
+import abc
 import json
+import multiprocessing.pool
 import warnings
-from multiprocessing.pool import ThreadPool
 
 import easyutils
 import requests
@@ -9,11 +10,18 @@ import requests
 from . import helpers
 
 
-class BaseQuotation:
+class BaseQuotation(metaclass=abc.ABCMeta):
     """行情获取基类"""
 
     max_num = 800  # 每次请求的最大股票数
-    stock_api = ""  # 股票 api
+
+    @property
+    @abc.abstractmethod
+    def stock_api(self) -> str:
+        """
+        行情 api 地址
+        """
+        pass
 
     def __init__(self):
         self._session = requests.session()
@@ -64,9 +72,10 @@ class BaseQuotation:
 
     def real(self, stock_codes, prefix=False):
         """return specific stocks real quotation
-        :param stock_codes: stock code or list of stock code, when prefix is True, stock code must start with sh/sz
-        :param prefix: if prefix is True, stock_codes must contain sh/sz market flag.
-            If prefix is False, index quotation can't return
+        :param stock_codes: stock code or list of stock code,
+                when prefix is True, stock code must start with sh/sz
+        :param prefix: if prefix i True, stock_codes must contain sh/sz market
+            flag. If prefix is False, index quotation can't return
         :return quotation dict, key is stock_code, value is real quotation.
             If prefix with True, key start with sh/sz market flag
 
@@ -79,14 +88,19 @@ class BaseQuotation:
 
     def market_snapshot(self, prefix=False):
         """return all market quotation snapshot
-        :param prefix: if prefix is True, return quotation dict's  stock_code key start with sh/sz market flag
+        :param prefix: if prefix is True, return quotation dict's  stock_code
+             key start with sh/sz market flag
         """
         return self.get_stock_data(self.stock_list, prefix=prefix)
 
     def get_stocks_by_range(self, params):
         headers = {
             "Accept-Encoding": "gzip, deflate, sdch",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36",
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/54.0.2840.100 "
+                "Safari/537.36"
+            ),
         }
 
         r = self._session.get(self.stock_api + params, headers=headers)
@@ -99,7 +113,7 @@ class BaseQuotation:
 
     def _fetch_stock_data(self, stock_list):
         """获取股票信息"""
-        pool = ThreadPool(len(stock_list))
+        pool = multiprocessing.pool.ThreadPool(len(stock_list))
         try:
             res = pool.map(self.get_stocks_by_range, stock_list)
         finally:

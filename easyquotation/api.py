@@ -1,29 +1,21 @@
 # coding:utf8
 
-from .boc import Boc
-from .jsl import Jsl
-from .sina import Sina
-from .tencent import Tencent
+from . import boc, jsl, sina, tencent, daykline, hkqoute, timekline
 
 
 def use(source):
     if source in ["sina"]:
-        return Sina()
+        return sina.Sina()
     if source in ["jsl"]:
-        return Jsl()
+        return jsl.Jsl()
     if source in ["qq", "tencent"]:
-        return Tencent()
+        return tencent.Tencent()
     if source in ["boc"]:
-        return Boc()
+        return boc.Boc()
     if source in ["timekline"]:
-        from .timekline import TimeKline
-
-        return TimeKline()
+        return timekline.TimeKline()
     if source in ["daykline"]:
-        from .daykline import DayKline
-
-        return DayKline()
+        return daykline.DayKline()
     if source in ["hkquote"]:
-        from .hkqoute import HKQuote
-
-        return HKQuote()
+        return hkqoute.HKQuote()
+    raise NotImplementedError

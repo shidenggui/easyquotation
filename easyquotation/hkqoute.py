@@ -2,7 +2,7 @@
 
 import re
 
-from .basequotation import BaseQuotation
+from . import basequotation
 
 """
 url = "http://sqt.gtimg.cn/utf8/q=r_hk00981"
@@ -12,10 +12,12 @@ url 参数改动
 """
 
 
-class HKQuote(BaseQuotation):
+class HKQuote(basequotation.BaseQuotation):
     """腾讯免费行情获取"""
 
-    stock_api = "http://sqt.gtimg.cn/utf8/q="
+    @property
+    def stock_api(self) -> str:
+        return "http://sqt.gtimg.cn/utf8/q="
 
     def _gen_stock_prefix(self, stock_codes):
         return ["r_hk{}".format(code) for code in stock_codes]

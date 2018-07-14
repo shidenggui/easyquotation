@@ -2,15 +2,18 @@
 import re
 from datetime import datetime
 
-from .basequotation import BaseQuotation
+from . import basequotation
 
 
-class Tencent(BaseQuotation):
+class Tencent(basequotation.BaseQuotation):
     """腾讯免费行情获取"""
 
-    stock_api = "http://qt.gtimg.cn/q="
     grep_stock_code = re.compile(r"(?<=_)\w+")
     max_num = 60
+
+    @property
+    def stock_api(self) -> str:
+        return "http://qt.gtimg.cn/q="
 
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)
