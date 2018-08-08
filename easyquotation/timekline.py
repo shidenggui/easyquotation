@@ -1,14 +1,14 @@
 # coding:utf8
+"""
+# pylint: disable=line-too-long
+url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.28163905744440854"
+"""
 
 import re
 
 import easyutils
 
 from . import basequotation
-
-"""
-url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.28163905744440854"
-"""
 
 
 class TimeKline(basequotation.BaseQuotation):
@@ -36,9 +36,10 @@ class TimeKline(basequotation.BaseQuotation):
                 with_stock.append((stock, resp))
         return with_stock
 
-    def format_response_data(self, rep_data, prefix=False):
+    def format_response_data(self, rep_data, **kwargs):
         stock_dict = dict()
         for stock_code, stock_detail in rep_data:
+            # pylint: disable=line-too-long
             # res like ['min_data="', 'date:180413', '0930 11.64 29727', '0931 11.65 52410']
             res = re.split(r"\\n\\\n", stock_detail)
             date = "20{}".format(res[1][-6:])

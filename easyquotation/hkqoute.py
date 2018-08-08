@@ -1,15 +1,15 @@
 # coding:utf8
-
-import re
-
-from . import basequotation
-
 """
 url = "http://sqt.gtimg.cn/utf8/q=r_hk00981"
 
 url 参数改动
 股票代码 q=r_hk00981
 """
+
+
+import re
+
+from . import basequotation
 
 
 class HKQuote(basequotation.BaseQuotation):
@@ -22,11 +22,11 @@ class HKQuote(basequotation.BaseQuotation):
     def _gen_stock_prefix(self, stock_codes):
         return ["r_hk{}".format(code) for code in stock_codes]
 
-    def format_response_data(self, rep_data, prefix=False):
+    def format_response_data(self, rep_data, **kwargs):
         stocks_detail = "".join(rep_data)
 
         stock_dict = {}
-        for raw_quotation in re.findall('v_r_hk\d+=".*?"', stocks_detail):
+        for raw_quotation in re.findall(r'v_r_hk\d+=".*?"', stocks_detail):
             quotation = re.search('"(.*?)"', raw_quotation).group(1).split("~")
             stock_dict[quotation[2]] = dict(
                 lotSize=float(quotation[0]),

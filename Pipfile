@@ -4,6 +4,9 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
+six = "*"
+requests = "*"
+easyutils = "*"
 
 [dev-packages]
 pytest-cov = "*"

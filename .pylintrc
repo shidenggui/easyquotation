@@ -60,7 +60,12 @@ confidence=
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
-disable=invalid-envvar-default,
+disable=too-many-arguments,
+        too-many-instance-attributes,
+        arguments-differ,
+        len-as-condition,
+        missing-docstring,
+        invalid-envvar-default,
         ungrouped-imports,
         bad-continuation,
         too-many-ancestors,
@@ -250,7 +255,8 @@ good-names=i,
            r,
            x,
            y,
-           e
+           e,
+           f
 
 # Include a hint for the correct naming format with invalid-name
 include-naming-hint=no

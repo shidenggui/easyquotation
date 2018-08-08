@@ -22,9 +22,9 @@ class Sina(basequotation.BaseQuotation):
         return f"http://hq.sinajs.cn/rn={self._random()}&list="
 
     @staticmethod
-    def _random(n=13) -> str:
-        start = 10 ** (n - 1)
-        end = (10 ** n) - 1
+    def _random(length=13) -> str:
+        start = 10 ** (length - 1)
+        end = (10 ** length) - 1
         return str(random.randint(start, end))
 
     def format_response_data(self, rep_data, prefix=False):

@@ -1,12 +1,14 @@
 # coding:utf8
-# 获取集思路的数据
+"""
+获取集思路的数据
+"""
 import json
 import time
 
 import requests
 
 
-class Jsl(object):
+class Jsl:
     """
     抓取集思路的分级A数据
     """
@@ -86,44 +88,53 @@ class Jsl(object):
     #  'status_cd': 'N'}
     # }
 
+    def __init__(self):
+        self.__funda = None
+        self.__fundm = None
+        self.__fundb = None
+        self.__fundarb = None
+        self.__etfindex = None
+        self.__qdii = None
+        self.__cb = None
+
     @staticmethod
     def formatfundajson(fundajson):
         """格式化集思录返回的json数据,以字典形式保存"""
-        d = {}
+        result = {}
         for row in fundajson["rows"]:
             funda_id = row["id"]
             cell = row["cell"]
-            d[funda_id] = cell
-        return d
+            result[funda_id] = cell
+        return result
 
     @staticmethod
     def formatfundbjson(fundbjson):
         """格式化集思录返回的json数据,以字典形式保存"""
-        d = {}
+        result = {}
         for row in fundbjson["rows"]:
             cell = row["cell"]
             fundb_id = cell["fundb_id"]
-            d[fundb_id] = cell
-        return d
+            result[fundb_id] = cell
+        return result
 
     @staticmethod
     def formatetfindexjson(fundbjson):
         """格式化集思录返回 指数ETF 的json数据,以字典形式保存"""
-        d = {}
+        result = {}
         for row in fundbjson["rows"]:
             cell = row["cell"]
             fundb_id = cell["fund_id"]
-            d[fundb_id] = cell
-        return d
+            result[fundb_id] = cell
+        return result
 
     @staticmethod
-    def formatjisilujson(json):
-        d = {}
-        for row in json["rows"]:
+    def formatjisilujson(data):
+        result = {}
+        for row in data["rows"]:
             cell = row["cell"]
-            id = row["id"]
-            d[id] = cell
-        return d
+            id_ = row["id"]
+            result[id_] = cell
+        return result
 
     @staticmethod
     def percentage2float(per):
@@ -136,7 +147,7 @@ class Jsl(object):
 
     def funda(
         self,
-        fields=[],
+        fields=None,
         min_volume=0,
         min_discount=0,
         ignore_nodown=False,
@@ -149,6 +160,9 @@ class Jsl(object):
         :param ignore_nodown:是否忽略无下折品种,默认 False
         :param forever: 是否选择永续品种,默认 False
         """
+        if fields is None:
+            fields = []
+
         # 添加当前的ctime
         self.__funda_url = self.__funda_url.format(ctime=int(time.time()))
         # 请求数据
@@ -206,13 +220,15 @@ class Jsl(object):
         self.__fundm = data
         return self.__fundm
 
-    def fundb(self, fields=[], min_volume=0, min_discount=0, forever=False):
+    def fundb(self, fields=None, min_volume=0, min_discount=0, forever=False):
         """以字典形式返回分级B数据
         :param fields:利率范围，形如['+3.0%', '6.0%']
         :param min_volume:最小交易量，单位万元
         :param min_discount:最小折价率, 单位%
         :param forever: 是否选择永续品种,默认 False
         """
+        if fields is None:
+            fields = []
         # 添加当前的ctime
         self.__fundb_url = self.__fundb_url.format(ctime=int(time.time()))
         # 请求数据
@@ -264,11 +280,12 @@ class Jsl(object):
         :param bvolume: B成交额，单位百万
         :param ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
         """
-        s = requests.session()
+        session = requests.session()
         headers = {
+            # pylint: disable=line-too-long
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
         }
-        s.headers.update(headers)
+        session.headers.update(headers)
 
         logindata = dict(
             return_url="http://www.jisilu.cn/",
@@ -278,7 +295,7 @@ class Jsl(object):
             _post_type="ajax",
         )
 
-        rep = s.post(self.__jsl_login_url, data=logindata)
+        rep = session.post(self.__jsl_login_url, data=logindata)
 
         if rep.json()["err"] is not None:
             return rep.json()
@@ -295,7 +312,7 @@ class Jsl(object):
             rp="50",
         )
         # 请求数据
-        rep = s.post(fundarb_url, data=pdata)
+        rep = session.post(fundarb_url, data=pdata)
 
         # 获取返回的json字符串
         fundajson = json.loads(rep.text)
@@ -323,10 +340,10 @@ class Jsl(object):
         # 请求数据
         rep = requests.get(self.__etf_index_url)
         # 获取返回的json字符串, 转化为字典
-        etfJson = rep.json()
+        etf_json = rep.json()
 
         # 格式化返回的json字符串
-        data = self.formatetfindexjson(etfJson)
+        data = self.formatetfindexjson(etf_json)
 
         # 过滤
         if index_id:
@@ -397,6 +414,7 @@ class Jsl(object):
         self.__qdii = data
         return self.__qdii
 
+    # pylint: disable=invalid-name
     def cb(self, min_volume=0):
         """以字典形式返回QDII数据
         :param min_volume:最小交易量，单位万元

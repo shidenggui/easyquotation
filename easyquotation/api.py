@@ -1,8 +1,9 @@
 # coding:utf8
 
-from . import boc, jsl, sina, tencent, daykline, hkqoute, timekline
+from . import boc, daykline, hkqoute, jsl, sina, tencent, timekline
 
 
+# pylint: disable=too-many-return-statements
 def use(source):
     if source in ["sina"]:
         return sina.Sina()

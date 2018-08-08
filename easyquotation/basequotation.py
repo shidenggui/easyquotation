@@ -80,7 +80,7 @@ class BaseQuotation(metaclass=abc.ABCMeta):
             If prefix with True, key start with sh/sz market flag
 
         """
-        if type(stock_codes) is not list:
+        if not isinstance(stock_codes, list):
             stock_codes = [stock_codes]
 
         stock_list = self.gen_stock_list(stock_codes)
