@@ -19,6 +19,7 @@ black = "==18.6b4"
 ipython = "*"
 better-exceptions = "*"
 pylint-django = "*"
+bumpversion = "*"
 
 [requires]
 python_version = "3.6"
