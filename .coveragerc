@@ -1,0 +1,7 @@
+[run]
+branch = True
+include = easyquotation/*
+omit = tests/*
+
+[report]
+fail_under = -1 

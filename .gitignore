@@ -1,8 +1,22 @@
+bak
+.mypy_cache
+.pyre
+.pytest_cache
+yjb_account.json
+htt.json
+gft.json
+test.py
+ht_account.json
 .idea
+.vscode
+.ipynb_checkpoints
+Untitled.ipynb
+untitled.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+account.json
+account.session
 # C extensions
 *.so
 
@@ -56,3 +70,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# cache
+tmp/
+
+secrets/
