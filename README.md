@@ -123,7 +123,7 @@ easyquotation.update_stock_codes()
 ```
 
 
-#### 选择 jsl 行情
+#### 选择 [jsl](https://www.jisilu.cn)（集思路） 行情
 
 ```
 quotation = easyquotation.use('jsl') # ['jsl']
