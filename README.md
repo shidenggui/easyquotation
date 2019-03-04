@@ -37,6 +37,12 @@
 pip install easyquotation
 ```
 
+也可以下载源码，然后安装
+
+```python
+python setup.py install
+```
+
 #### 升级
 
 ```python
