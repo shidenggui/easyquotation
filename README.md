@@ -37,6 +37,12 @@
 pip install easyquotation
 ```
 
+也可以下载源码，然后安装
+
+```python
+python setup.py install
+```
+
 #### 升级
 
 ```python
@@ -117,7 +123,7 @@ easyquotation.update_stock_codes()
 ```
 
 
-#### 选择 jsl 行情
+#### 选择 [jsl](https://www.jisilu.cn)（集思路） 行情
 
 ```
 quotation = easyquotation.use('jsl') # ['jsl']
