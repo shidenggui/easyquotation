@@ -175,7 +175,7 @@ easyquotation.update_stock_codes()
 
 setup(
     name="easyquotation",
-    version="0.5.12",
+    version="0.5.13",
     description="A utility for Fetch China Stock Info",
     long_description=long_desc,
     author="shidenggui",
