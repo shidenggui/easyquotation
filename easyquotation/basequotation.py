@@ -3,8 +3,6 @@ import abc
 import json
 import multiprocessing.pool
 import warnings
-
-import easyutils
 import requests
 
 from . import helpers
@@ -48,7 +46,7 @@ class BaseQuotation(metaclass=abc.ABCMeta):
 
     def _gen_stock_prefix(self, stock_codes):
         return [
-            easyutils.stock.get_stock_type(code) + code[-6:]
+            helpers.get_stock_type(code) + code[-6:]
             for code in stock_codes
         ]
 
