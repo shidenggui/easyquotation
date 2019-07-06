@@ -3,7 +3,6 @@
 certifi==2018.4.16
 chardet==3.0.4
 cssselect==1.0.3; python_version != '3.3.*'
-easyutils==0.1.7
 idna==2.7
 lxml==4.2.3
 pyquery==1.4.0; python_version != '3.0.*'
