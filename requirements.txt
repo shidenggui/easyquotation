@@ -1,12 +1,1 @@
--i http://mirrors.aliyun.com/pypi/simple/
---trusted-host mirrors.aliyun.com
-certifi==2018.4.16
-chardet==3.0.4
-cssselect==1.0.3; python_version != '3.3.*'
-easyutils==0.1.7
-idna==2.7
-lxml==4.2.3
-pyquery==1.4.0; python_version != '3.0.*'
-requests==2.19.1
-six==1.11.0
-urllib3==1.23; python_version != '3.1.*'
+requests
