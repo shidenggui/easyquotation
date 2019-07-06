@@ -5,10 +5,7 @@ url = "http://data.gtimg.cn/flashdata/hushen/minute/sz000001.js?maxage=110&0.281
 """
 
 import re
-
-import easyutils
-
-from . import basequotation
+from . import basequotation, helpers
 
 
 class TimeKline(basequotation.BaseQuotation):
@@ -22,7 +19,7 @@ class TimeKline(basequotation.BaseQuotation):
 
     def _gen_stock_prefix(self, stock_codes):
         return [
-            easyutils.stock.get_stock_type(code) + code[-6:] + ".js"
+            helpers.get_stock_type(code) + code[-6:] + ".js"
             for code in stock_codes
         ]
 
