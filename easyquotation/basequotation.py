@@ -52,7 +52,7 @@ class BaseQuotation(metaclass=abc.ABCMeta):
 
     @staticmethod
     def load_stock_codes():
-        with open(helpers.stock_code_path()) as f:
+        with open(helpers.STOCK_CODE_PATH) as f:
             return json.load(f)["stock"]
 
     @property
