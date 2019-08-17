@@ -18,6 +18,10 @@ class Sina(basequotation.BaseQuotation):
         % (r",([\.\d]+)" * 29, r",([-\.\d:]+)" * 2)
     )
 
+    del_null_data_stock = re.compile(
+        r"(\w{2}\d+)=\"\";"
+    )    
+
     @property
     def stock_api(self) -> str:
         return f"http://hq.sinajs.cn/rn={int(time.time()*1000)}&list="
@@ -25,6 +29,7 @@ class Sina(basequotation.BaseQuotation):
 
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)
+        stocks_detail = self.del_null_data_stock.sub('', stocks_detail)        
         grep_str = self.grep_detail_with_prefix if prefix else self.grep_detail
         result = grep_str.finditer(stocks_detail)
         stock_dict = dict()
