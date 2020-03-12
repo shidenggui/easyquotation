@@ -14,7 +14,7 @@
 
 ### 加微信群以及公众号
 
-欢迎大家扫码关注我的个人公众号"食灯鬼"，通过菜单加我好友，备注量化进群
+欢迎大家扫码关注公众号"食灯鬼"，通过菜单加我好友，备注量化进群
 
 ![JDRUhz](https://gitee.com/shidenggui/assets/raw/master/uPic/JDRUhz.jpg)
 
