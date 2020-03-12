@@ -11,24 +11,17 @@
 * 获取新浪的免费实时行情
 * 获取腾讯财经的免费实时行情
 * 获取集思路的分级基金数据
-* 有兴趣的可以加群 `556050652` 一起讨论
-* 捐助:
 
-## 公众号
+### 加微信群以及公众号
 
-扫码关注“易量化”的微信公众号，不定时更新一些个人文章及与大家交流
+欢迎大家扫码关注我的个人公众号"食灯鬼"，通过菜单加我好友，备注量化进群
 
-![](https://raw.githubusercontent.com/shidenggui/assets/master/easytrader/easy_quant_qrcode.jpg)
+![JDRUhz](https://gitee.com/shidenggui/assets/raw/master/uPic/JDRUhz.jpg)
 
-## 赞助:
+### 其他作品
 
-![微信](https://raw.githubusercontent.com/shidenggui/assets/master/easytrader/wechat_pay_qr.png)             ![支付宝](https://raw.githubusercontent.com/shidenggui/assets/master/easytrader/alipay_qr.jpeg)
-
-### 其他
-
-最近在开发一个[大数据网络小说推荐系统 - 推书君](https://www.tuishujun.com)，同时也将相关的功能集成到了对应的公众号，刚刚起步，如果大家对网文感兴趣的话欢迎关注交流
-
-![推书君](https://raw.githubusercontent.com/shidenggui/assets/master/tuishujun/qr.jpeg)
+* [大数据网络小说推荐系统 - 推书君](https://www.tuishujun.com)
+* [中文独立个人博客导航 - bloghub.fun](https://bloghub.fun)
 
 ### requirements
 
