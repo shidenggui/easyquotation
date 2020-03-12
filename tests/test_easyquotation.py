@@ -32,6 +32,7 @@ class TestHqouteQuotatin(unittest.TestCase):
         excepted = {
             "00700": {
                 "amount": 41115421.0,
+                "dtd": -0.63,
                 "high": 417.0,
                 "lastPrice": 412.2,
                 "lotSize": 100.0,
@@ -43,6 +44,7 @@ class TestHqouteQuotatin(unittest.TestCase):
             },
             "00980": {
                 "amount": 825000.0,
+                "dtd": 0.42,
                 "high": 2.44,
                 "lastPrice": 2.38,
                 "lotSize": 100.0,

@@ -36,6 +36,7 @@ class HKQuote(basequotation.BaseQuotation):
                 openPrice=float(quotation[5]),
                 amount=float(quotation[6]),
                 time=quotation[30],
+                dtd=float(quotation[32]),
                 high=float(quotation[33]),
                 low=float(quotation[34]),
             )
