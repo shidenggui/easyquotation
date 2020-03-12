@@ -9,7 +9,7 @@ class TestEasyquotation(unittest.TestCase):
         cases = ["sina", "qq"]
         for src in cases:
             q = easyquotation.use(src)
-            data = q.all_market
+            data = q.market_snapshot(prefix=True)
             for k in data.keys():
                 self.assertRegex(k, r"(sh|sz)\d{6}")
 
@@ -17,7 +17,7 @@ class TestEasyquotation(unittest.TestCase):
         cases = ["sina", "qq"]
         for src in cases:
             q = easyquotation.use(src)
-            data = q.all
+            data = q.market_snapshot()
             for k in data.keys():
                 self.assertRegex(k, r"\d{6}")
 
