@@ -1,7 +1,7 @@
 # coding:utf8
-import random
 import re
 import time
+
 from . import basequotation
 
 
@@ -23,8 +23,7 @@ class Sina(basequotation.BaseQuotation):
 
     @property
     def stock_api(self) -> str:
-        return f"http://hq.sinajs.cn/rn={int(time.time()*1000)}&list="
-
+        return f"http://hq.sinajs.cn/rn={int(time.time() * 1000)}&list="
 
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)
