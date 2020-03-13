@@ -31,7 +31,9 @@ class Jsl:
     __jsl_login_url = "https://www.jisilu.cn/account/ajax/login_process/"
 
     # 集思录 ETF 接口
-    __etf_index_url = "https://www.jisilu.cn/jisiludata/etf.php?___t={ctime:d}"
+    # pylint: disable=line-too-long
+    __etf_index_url = "https://www.jisilu.cn/data/etf/etf_list/?___jsl=LST___t={ctime:d}&rp=25&page=1"
+
     # 黄金 ETF , 货币 ETF 留坑,未完成
     __etf_gold_url = (
         "https://www.jisilu.cn/jisiludata/etf.php?qtype=pmetf&___t={ctime:d}"
@@ -334,13 +336,9 @@ class Jsl:
         :return: {"fund_id":{}}
         """
         # 添加当前的ctime
-        self.__etf_index_url = self.__etf_index_url.format(
-            ctime=int(time.time())
-        )
+        etf_index_url = self.__etf_index_url.format(ctime=int(time.time()))
         # 请求数据
-        rep = requests.get(self.__etf_index_url)
-        # 获取返回的json字符串, 转化为字典
-        etf_json = rep.json()
+        etf_json = requests.get(etf_index_url).json()
 
         # 格式化返回的json字符串
         data = self.formatetfindexjson(etf_json)
