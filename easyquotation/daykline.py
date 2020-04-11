@@ -39,7 +39,13 @@ class DayKline(basequotation.BaseQuotation):
             stock_details = json.loads(raw_stocks_detail)
             for stock, value in stock_details["data"].items():
                 stock_code = stock[2:]
-                stock_detail = value["qfqday"]
+                if "qfqday" in value:
+                    stock_detail = value["qfqday"]
+                else:
+                    stock_detail = value.get("day")
+                if stock_detail is None:
+                    print("stock code data not find %s"%stock_code)
+                    continue
                 stock_dict[stock_code] = stock_detail
                 break
 
