@@ -21,8 +21,6 @@ setup(
     keywords="China stock trade",
     install_requires=[
         "requests",
-        "aiohttp>=1.1.1",
-        "yarl",
         "six",
         "easyutils",
     ],
