@@ -10,7 +10,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="easyquotation",
-    version="0.7.2",
+    version="0.7.3",
     description="A utility for Fetch China Stock Info",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -19,11 +19,7 @@ setup(
     license="BSD",
     url="https://github.com/shidenggui/easyquotation",
     keywords="China stock trade",
-    install_requires=[
-        "requests",
-        "six",
-        "easyutils",
-    ],
+    install_requires=["requests", "six", "easyutils"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.5",
