@@ -420,7 +420,11 @@ class Jsl:
         # 添加当前的ctime
         self.__cb_url = self.__cb_url.format(ctime=int(time.time()))
         # 请求数据
-        rep = requests.get(self.__cb_url)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+            'Cookie':'在你的浏览器里找到cookie'}
+        session = requests.Session()
+        rep = session.get(self.__cb_url,headers=headers)
         # 获取返回的json字符串
         fundjson = json.loads(rep.text)
         # 格式化返回的json字符串
