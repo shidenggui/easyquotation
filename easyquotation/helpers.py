@@ -33,7 +33,7 @@ def get_stock_type(stock_code):
     :param stock_code:股票ID, 若以 'sz', 'sh' 开头直接返回对应类型，否则使用内置规则判断
     :return 'sh' or 'sz'"""
     assert type(stock_code) is str, "stock code need str type"
-    sh_head = ("50", "51", "60", "90", "110", "113",
+    sh_head = ("50", "51", "60", "90", "110", "113", "118",
                "132", "204", "5", "6", "9", "7")
     if stock_code.startswith(("sh", "sz", "zz")):
         return stock_code[:2]
