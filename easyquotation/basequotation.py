@@ -96,6 +96,7 @@ class BaseQuotation(metaclass=abc.ABCMeta):
                 "(KHTML, like Gecko) Chrome/54.0.2840.100 "
                 "Safari/537.36"
             ),
+            "Referer": "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
         }
 
         r = self._session.get(self.stock_api + params, headers=headers)
