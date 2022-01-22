@@ -4,6 +4,7 @@
 """
 import json
 import time
+from typing import Optional
 
 import requests
 
@@ -98,6 +99,19 @@ class Jsl:
         self.__etfindex = None
         self.__qdii = None
         self.__cb = None
+        self._cookie: Optional[str] = None
+
+    def set_cookie(self, cookie: str):
+        self._cookie = cookie
+
+    def _get_headers(self) -> dict:
+        default = {
+            # pylint: disable=line-too-long
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
+        }
+        if self._cookie:
+            default = {**default, 'Cookie': self._cookie}
+        return default
 
     @staticmethod
     def formatfundajson(fundajson):
@@ -283,11 +297,7 @@ class Jsl:
         :param ptype: 溢价计算方式，price=现价，buy=买一，sell=卖一
         """
         session = requests.session()
-        headers = {
-            # pylint: disable=line-too-long
-            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
-        }
-        session.headers.update(headers)
+        session.headers.update(self._get_headers())
 
         logindata = dict(
             return_url="http://www.jisilu.cn/",
@@ -413,18 +423,16 @@ class Jsl:
         return self.__qdii
 
     # pylint: disable=invalid-name
-    def cb(self, min_volume=0):
+    def cb(self, min_volume=0, cookie: str=None):
         """以字典形式返回QDII数据
         :param min_volume:最小交易量，单位万元
+        :cookie: 登陆凭证，可以从浏览器获取的对应 Cookie
         """
         # 添加当前的ctime
         self.__cb_url = self.__cb_url.format(ctime=int(time.time()))
         # 请求数据
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
-            'Cookie':'在你的浏览器里找到cookie'}
         session = requests.Session()
-        rep = session.get(self.__cb_url,headers=headers)
+        rep = session.get(self.__cb_url,headers=self._get_headers())
         # 获取返回的json字符串
         fundjson = json.loads(rep.text)
         # 格式化返回的json字符串

@@ -139,6 +139,14 @@ easyquotation.update_stock_codes()
 quotation = easyquotation.use('jsl') # ['jsl']
 ```
 
+##### 设置 cookie (可选)
+
+不设置的话获取相关数据有限制
+
+```
+quotation.set_cookie('从浏览器获取的集思录 Cookie')
+```
+
 ##### 获取分级基金信息
 
 ```
