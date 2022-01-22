@@ -25,6 +25,13 @@ class Sina(basequotation.BaseQuotation):
     def stock_api(self) -> str:
         return f"http://hq.sinajs.cn/rn={int(time.time() * 1000)}&list="
 
+    def _get_headers(self) -> dict:
+        headers = super()._get_headers()
+        return {
+            **headers,
+            'Referer': 'http://finance.sina.com.cn/'
+        }
+
     def format_response_data(self, rep_data, prefix=False):
         stocks_detail = "".join(rep_data)
         stocks_detail = self.del_null_data_stock.sub('', stocks_detail)

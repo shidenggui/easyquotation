@@ -89,7 +89,12 @@ class BaseQuotation(metaclass=abc.ABCMeta):
         return self.get_stock_data(self.stock_list, prefix=prefix)
 
     def get_stocks_by_range(self, params):
-        headers = {
+        headers = self._get_headers()
+        r = self._session.get(self.stock_api + params, headers=headers)
+        return r.text
+
+    def _get_headers(self) -> dict:
+        return {
             "Accept-Encoding": "gzip, deflate, sdch",
             "User-Agent": (
                 "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -97,9 +102,6 @@ class BaseQuotation(metaclass=abc.ABCMeta):
                 "Safari/537.36"
             ),
         }
-
-        r = self._session.get(self.stock_api + params, headers=headers)
-        return r.text
 
     def get_stock_data(self, stock_list, **kwargs):
         """获取并格式化股票信息"""
