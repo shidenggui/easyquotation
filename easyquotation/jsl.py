@@ -424,7 +424,7 @@ class Jsl:
 
     # pylint: disable=invalid-name
     def cb(self, min_volume=0, cookie: str=None):
-        """以字典形式返回QDII数据
+        """以字典形式返回可转债数据
         :param min_volume:最小交易量，单位万元
         :cookie: 登陆凭证，可以从浏览器获取的对应 Cookie
         """
