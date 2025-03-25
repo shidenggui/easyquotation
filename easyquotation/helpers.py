@@ -9,16 +9,16 @@ STOCK_CODE_PATH = os.path.join(os.path.dirname(__file__), "stock_codes.conf")
 
 
 def update_stock_codes():
-    """获取所有股票 ID 到 all_stock_code 目录下"""
-    response = requests.get("http://www.shdjt.com/js/lib/astock.js")
-    stock_codes = re.findall(r"~([a-z0-9]*)`", response.text)
+    """更新内置股票代码表"""
+    response = requests.get("https://shidenggui.com/easy/stock_codes.json", headers ={'Accept-Encoding':'gzip'})
     with open(STOCK_CODE_PATH, "w") as f:
-        f.write(json.dumps(dict(stock=stock_codes)))
-    return stock_codes
+        f.write(response.text)
+    return response.json()
 
 
 def get_stock_codes(realtime=False):
-    """获取所有股票 ID 到 all_stock_code 目录下"""
+    """获取内置股票代码表
+    :param realtime: 是否获取实时数据, 默认为否"""
     if realtime:
         return update_stock_codes()
     with open(STOCK_CODE_PATH) as f:
