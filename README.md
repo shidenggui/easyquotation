@@ -1,7 +1,6 @@
 # easyquotation
 
 [![Package](https://img.shields.io/pypi/v/easyquotation.svg)](https://pypi.python.org/pypi/easyquotation)
-[![Travis](https://img.shields.io/travis/shidenggui/easyquotation.svg)](https://travis-ci.org/shidenggui/easyquotation)
 [![License](https://img.shields.io/github/license/shidenggui/easyquotation.svg)](https://github.com/shidenggui/easyquotation/blob/master/LICENSE)
 
 
@@ -37,8 +36,6 @@
 
 > Python 3.6+
  
-> pip install -r requirements.txt
-
 ### 安装
 
 ```python
