@@ -25,6 +25,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "License :: OSI Approved :: BSD License",
     ],
+    python_requires=">=3.6",
     packages=["easyquotation"],
     package_data={"": ["*.conf"]},
 )
