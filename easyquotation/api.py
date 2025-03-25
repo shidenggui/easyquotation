@@ -1,6 +1,6 @@
 # coding:utf8
 
-from . import boc, daykline, hkquote, jsl, sina, tencent, timekline
+from . import boc, daykline, hkquote, jsl, sina, tencent
 
 
 # pylint: disable=too-many-return-statements
@@ -13,8 +13,6 @@ def use(source):
         return tencent.Tencent()
     if source in ["boc"]:
         return boc.Boc()
-    if source in ["timekline"]:
-        return timekline.TimeKline()
     if source in ["daykline"]:
         return daykline.DayKline()
     if source in ["hkquote"]:
