@@ -19,7 +19,7 @@ setup(
     license="BSD",
     url="https://github.com/shidenggui/easyquotation",
     keywords="China stock trade",
-    install_requires=["requests", "six", "easyutils"],
+    install_requires=["requests"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.5",
