@@ -63,17 +63,17 @@ class BaseQuotation(metaclass=abc.ABCMeta):
         return self.get_stock_data(self.stock_list, prefix=True)
 
     def stocks(self, stock_codes, prefix=False):
+        """deprecated, use real instead"""
+        warnings.warn("use real instead", DeprecationWarning)
         return self.real(stock_codes, prefix)
 
     def real(self, stock_codes, prefix=False):
-        """return specific stocks real quotation
-        :param stock_codes: stock code or list of stock code,
-                when prefix is True, stock code must start with sh/sz
-        :param prefix: if prefix i True, stock_codes must contain sh/sz market
-            flag. If prefix is False, index quotation can't return
-        :return quotation dict, key is stock_code, value is real quotation.
-            If prefix with True, key start with sh/sz market flag
-
+        """返回指定股票的实时行情
+        :param stock_codes: 股票代码或股票代码列表，
+                示例：'000001' / 'sh000001' / ['000001', '000002'] 
+        :param prefix: 如果prefix为True，返回的行情字典键以sh/sz/bj市场标识开头
+                    如果prefix为False，返回的行情将无法区分指数和股票代码，例如 sh000001 上证指数和 sz000001 平安银行
+        :return: 行情字典，键为股票代码，值为实时行情。
         """
         if not isinstance(stock_codes, list):
             stock_codes = [stock_codes]

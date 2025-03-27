@@ -1,7 +1,6 @@
 # coding:utf8
 import json
 import os
-import re
 
 import requests
 
