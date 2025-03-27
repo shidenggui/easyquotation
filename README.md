@@ -71,7 +71,8 @@ quotation = easyquotation.use('sina') # 新浪 ['sina'] 腾讯 ['tencent', 'qq']
 #### 获取所有股票行情
 
 ```python
-quotation.market_snapshot(prefix=True) # prefix 参数指定返回的行情字典中的股票代码 key 是否带 sz/sh 前缀
+# prefix 指定返回行情的股票代码是否带 sz/sh/bj 市场前缀
+quotation.market_snapshot(prefix=True) 
 ```
 
 **return**
@@ -112,16 +113,16 @@ quotation.real('162411') # 支持直接指定前缀，如 'sh000001'
 ##### 多只股票
 
 ```
-quotation.stocks(['000001', '162411']) 
+quotation.real(['000001', '162411']) 
 ```
 
 ##### 同时获取指数和行情
-
 ```
-quotation.stocks(['sh000001', 'sz000001'], prefix=True) 
+# 获取相同代码的指数和股票时 prefix 必须为 True
+quotation.real(['sh000001', 'sz000001'], prefix=True)
 ```
 
-#### 更新股票代码
+#### 更新内置全市场股票代码
 
 ```
 easyquotation.update_stock_codes()
@@ -194,10 +195,10 @@ print(data)
 }
 ```
 
-#### 选择 [jsl](https://www.jisilu.cn)（集思路） 行情
+#### 选择 [jsl](https://www.jisilu.cn)（集思录） 行情
 
 ```
-quotation = easyquotation.use('jsl') # ['jsl']
+quotation = easyquotation.use('jsl') 
 ```
 
 ##### 设置 cookie (可选)
@@ -247,16 +248,3 @@ quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=No
 }
 ```
 
-
-
-### 开发指南
-
-#### 初始化环境
-
-进入项目目录后运行 
-
-```
-make init
-```
-
-提交代码时通过所有 `hooks` 检查即可
