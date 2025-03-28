@@ -138,6 +138,7 @@ import easyquotation
 quotation  = easyquotation.use("daykline")
 data = quotation.real(['00001','00700'])
 print(data)
+```
 
 ```python
 {
