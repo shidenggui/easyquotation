@@ -15,9 +15,9 @@
 
 欢迎大家扫码关注公众号「食灯鬼」，一起交流。进群可通过菜单加我好友，备注量化。
 
-![公众号二维码](https://gitee.com/shidenggui/assets/raw/master/uPic/mp-qr.png)
+![公众号二维码](https://camo.githubusercontent.com/6fad032c27b30b68a9d942ae77f8cc73933b95cea58e684657d31b94a300afd5/68747470733a2f2f67697465652e636f6d2f73686964656e676775692f6173736574732f7261772f6d61737465722f755069632f6d702d71722e706e67)
 
-若二维码因 Github 网络无法打开，请点击[公众号二维码](https://gitee.com/shidenggui/assets/raw/master/uPic/mp-qr.png)直接打开图片。
+若二维码因 Github 网络无法打开，请点击[公众号二维码](https://doc.metaslip.com/easy/weixin_gzh.png)直接打开图片。
 
 ### Author
 
