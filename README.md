@@ -106,25 +106,25 @@ quotation.market_snapshot(prefix=True)
  
 ##### 单只股票
 
-```
+```python
 quotation.real('162411') # 支持直接指定前缀，如 'sh000001'
 ```
 
 ##### 多只股票
 
-```
+```python
 quotation.real(['000001', '162411']) 
 ```
 
 ##### 同时获取指数和行情
-```
+```python
 # 获取相同代码的指数和股票时 prefix 必须为 True
 quotation.real(['sh000001', 'sz000001'], prefix=True)
 ```
 
 #### 更新内置全市场股票代码
 
-```
+```python
 easyquotation.update_stock_codes()
 ```
 
@@ -139,9 +139,7 @@ quotation  = easyquotation.use("daykline")
 data = quotation.real(['00001','00700'])
 print(data)
 
-```
-*return*
-```
+```python
 {
     '00001': [
                 ['2017-10-09', '352.00', '349.00', '353.00', '348.60', '13455864.00'], # [日期, 今开, 今收, 最高, 最低, 成交量 ]
@@ -164,7 +162,7 @@ data = quotation.real(['00001','00700'])
 print(data)
 ```
 
-```
+```python
 {
     '00001': 
         {
@@ -197,7 +195,7 @@ print(data)
 
 #### 选择 [jsl](https://www.jisilu.cn)（集思录） 行情
 
-```
+```python
 quotation = easyquotation.use('jsl') 
 ```
 
@@ -205,7 +203,7 @@ quotation = easyquotation.use('jsl')
 
 不设置的话获取相关数据有限制
 
-```
+```python
 quotation.set_cookie('从浏览器获取的集思录 Cookie')
 ```
 
@@ -216,13 +214,13 @@ quotation.set_cookie('从浏览器获取的集思录 Cookie')
 
 *[集思录ETF源网页](https://www.jisilu.cn/data/etf/#tlink_2)*
 
-```
+```python
 quotation.etfindex(index_id="", min_volume=0, max_discount=None, min_discount=None)
 ```
 
 **return**
 
-```
+```python
 {
     "510050": {
         "fund_id": "510050",                # 代码
