@@ -30,8 +30,7 @@ class DayKlineBase(basequotation.BaseQuotation):
     def format_response_data(self, rep_data, **kwargs):
         stock_dict = {}
         for raw_quotation in rep_data:
-            raw_stocks_detail = re.search(r"=(.*)", raw_quotation).group(1)
-            stock_details = json.loads(raw_stocks_detail)
+            stock_details = json.loads(raw_quotation)
             if not stock_details["data"]:
                 continue
             for stock_code, value in stock_details["data"].items():
@@ -71,7 +70,7 @@ class HKDayKline(DayKlineBase):
     @property
     def stock_api(self) -> str:
         # pylint: disable=line-too-long
-        return "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=kline_dayqfq&param="
+        return "http://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?_var=&param="
 
     def _gen_stock_prefix(self, stock_codes, day=1500):
         stock_codes = [c if c.startswith('hk') else 'hk'+c for c in stock_codes]
@@ -86,7 +85,7 @@ class CNDayKline(DayKlineBase):
     @property
     def stock_api(self) -> str:
         # pylint: disable=line-too-long
-        return "http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?_var=kline_dayqfq&param="
+        return "http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?_var=&param="
 
     def _gen_stock_list(self, stock_codes, day=1500):
         return ["{},day,,,{},qfq".format(code, day) for code in stock_codes]
