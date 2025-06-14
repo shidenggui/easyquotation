@@ -32,26 +32,10 @@
 * [easytrader 股票程序化交易库](https://github.com/shidenggui/easytrader)
 * [easyquant 简单的量化框架](https://github.com/shidenggui/easyqutant)
 
-### requirements
-
-> Python 3.6+
- 
 ### 安装
 
 ```python
 pip install easyquotation
-```
-
-也可以下载源码，然后安装
-
-```python
-python setup.py install
-```
-
-#### 升级
-
-```python
-pip install easyquotation --upgrade
 ```
 
 ### 用法
