@@ -1,7 +1,7 @@
 # coding:utf8
 import abc
 import json
-import multiprocessing.pool
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import warnings
 
 import requests
@@ -110,12 +110,25 @@ class BaseQuotation(metaclass=abc.ABCMeta):
 
     def _fetch_stock_data(self, stock_list):
         """获取股票信息"""
-        pool = multiprocessing.pool.ThreadPool(len(stock_list))
-        try:
-            res = pool.map(self.get_stocks_by_range, stock_list)
-        finally:
-            pool.close()
-        return [d for d in res if d is not None]
+
+        max_workers = min(len(stock_list), 10) # 10 urllib3 默认的最大连接池大小
+        results = []
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_stock = {
+                executor.submit(self.get_stocks_by_range, stock): stock
+                for stock in stock_list
+            }
+
+            for future in as_completed(future_to_stock, timeout=60):
+                try:
+                    data = future.result()
+                    if data is not None:
+                        results.append(data)
+                except Exception as e:
+                    print(f"处理股票数据出错: {str(e)}")
+
+        return results
 
     def format_response_data(self, rep_data, **kwargs):
         pass
